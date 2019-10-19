@@ -13,7 +13,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 /**
  *
@@ -37,6 +40,9 @@ public class Instituicaocontato implements Serializable {
     private String fone;
     @Column(name = "cargo")
     private String cargo;
+    @JoinColumn(name = "instituicao_idinstituicao", referencedColumnName = "idinstituicao")
+    @OneToOne(optional = false)
+    private Instituicao instituicao;
 
     public Instituicaocontato() {
     }
@@ -85,7 +91,15 @@ public class Instituicaocontato implements Serializable {
         this.cargo = cargo;
     }
 
-    @Override
+    public Instituicao getInstituicao() {
+		return instituicao;
+	}
+
+	public void setInstituicao(Instituicao instituicao) {
+		this.instituicao = instituicao;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idinstituicaocontato != null ? idinstituicaocontato.hashCode() : 0);

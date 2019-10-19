@@ -63,10 +63,11 @@ public class Instituicao implements Serializable {
     private String observacao;
     @Column(name = "tipo")
     private String tipo;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "instituicaoIdinstituicao")
-    Instituicaocontato instituicaocontatoList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "instituicaoIdinstituicao")
-    private Instituicaoendereco instituicaoendereco;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "instituicao")
+    Instituicaocontato instituicaocontato;
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "instituicao")
+	private Instituicaoendereco instituicaoendereco;
+    
 
     public Instituicao() {
     }
@@ -196,12 +197,12 @@ public class Instituicao implements Serializable {
     }
 
     
-    public Instituicaocontato getInstituicaocontatoList() {
-		return instituicaocontatoList;
+	public Instituicaocontato getInstituicaocontato() {
+		return instituicaocontato;
 	}
 
-	public void setInstituicaocontatoList(Instituicaocontato instituicaocontatoList) {
-		this.instituicaocontatoList = instituicaocontatoList;
+	public void setInstituicaocontato(Instituicaocontato instituicaocontato) {
+		this.instituicaocontato = instituicaocontato;
 	}
 
 	public Instituicaoendereco getInstituicaoendereco() {

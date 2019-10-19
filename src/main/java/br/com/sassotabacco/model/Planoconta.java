@@ -35,7 +35,7 @@ public class Planoconta implements Serializable {
     private String descricao;
     @JoinColumn(name = "categoriaconta_idcategoriaconta", referencedColumnName = "idcategoriaconta")
     @ManyToOne(optional = false)
-    private Categoriaconta categoriacontaIdcategoriaconta;
+    private Categoriaconta categoriaconta;
 
     public Planoconta() {
     }
@@ -60,15 +60,17 @@ public class Planoconta implements Serializable {
         this.descricao = descricao;
     }
 
-    public Categoriaconta getCategoriacontaIdcategoriaconta() {
-        return categoriacontaIdcategoriaconta;
-    }
+    
 
-    public void setCategoriacontaIdcategoriaconta(Categoriaconta categoriacontaIdcategoriaconta) {
-        this.categoriacontaIdcategoriaconta = categoriacontaIdcategoriaconta;
-    }
+    public Categoriaconta getCategoriaconta() {
+		return categoriaconta;
+	}
 
-    @Override
+	public void setCategoriaconta(Categoriaconta categoriaconta) {
+		this.categoriaconta = categoriaconta;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idplanoconta != null ? idplanoconta.hashCode() : 0);

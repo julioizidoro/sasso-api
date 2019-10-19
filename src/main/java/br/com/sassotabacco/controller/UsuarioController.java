@@ -29,6 +29,9 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	
+	
+	
 	@GetMapping("buscar/{situacao}")
 	public ResponseEntity<Optional<List<Usuario>>> buscarSituacao(@PathVariable("situacao") boolean situacao) {
 		Optional<List<Usuario>> usuarios = usuarioRepository.findBySituacaoOrderByNome(situacao);
@@ -39,7 +42,20 @@ public class UsuarioController {
 		return ResponseEntity.ok(usuarios);
 	}
 	
-	@PostMapping
+	@PostMapping(path = "/logar", consumes = "application/json", produces = "application/json") 
+	@ResponseStatus(HttpStatus.CREATED)
+		public ResponseEntity<Usuario> logar(@Valid @RequestBody Usuario usuario) {
+		Criptografia criptografia = new Criptografia();
+		String password = (criptografia.encript(usuario.getPassword()));
+		usuario = usuarioRepository.findByUserAndPasswordAndSituacao(usuario.getUser(), password,true);
+		if (usuario==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(usuario);
+	}
+	
+	@PostMapping("/salvar")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Usuario salvar(@Valid @RequestBody Usuario usuario) {
 		Criptografia criptografia = new Criptografia();
@@ -59,10 +75,10 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/{user}/{password}")
-	public ResponseEntity<Optional<Usuario>> buscar(@PathVariable("user") String user, @PathVariable("password") String password) {
+	public ResponseEntity<Usuario> buscar(@PathVariable("user") String user, @PathVariable("password") String password) {
 		Criptografia criptografia = new Criptografia();
 		password = (criptografia.encript(password));
-		Optional<Usuario> usuario = usuarioRepository.findByUserAndPasswordAndSituacao(user, password,true);
+		Usuario usuario = usuarioRepository.findByUserAndPasswordAndSituacao(user, password,true);
 		
 		if (usuario==null) {
 			return ResponseEntity.notFound().build();

@@ -34,7 +34,7 @@ public class Categoriaconta implements Serializable {
     private Integer idcategoriaconta;
     @Column(name = "descricao")
     private String descricao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriacontaIdcategoriaconta")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoriaconta")
     private List<Planoconta> planocontaList;
 
     public Categoriaconta() {
