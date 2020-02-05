@@ -6,6 +6,7 @@
 package br.com.sassotabacco.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -32,6 +33,8 @@ public class Instituicaoendereco implements Serializable {
     @Basic(optional = false)
     @Column(name = "idinstituicaoendereco")
     private Integer idinstituicaoendereco;
+    @Column(name = "tipo")
+    private String tipo;
     @Column(name = "logradouro")
     private String logradouro;
     @Column(name = "numero")
@@ -46,7 +49,8 @@ public class Instituicaoendereco implements Serializable {
     private String estado;
     @Column(name = "cep")
     private String cep;
-    @JoinColumn(name = "instituicao_idinstituicao", referencedColumnName = "idinstituicao")
+    @JsonBackReference	
+	@JoinColumn(name = "instituicao_idinstituicao", referencedColumnName = "idinstituicao")
     @OneToOne(optional = false)
     private Instituicao instituicao;
    
@@ -63,6 +67,14 @@ public class Instituicaoendereco implements Serializable {
 
     public void setIdinstituicaoendereco(Integer idinstituicaoendereco) {
         this.idinstituicaoendereco = idinstituicaoendereco;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getLogradouro() {
@@ -122,7 +134,15 @@ public class Instituicaoendereco implements Serializable {
     }
 
     
-    @Override
+    public Instituicao getInstituicao() {
+		return instituicao;
+	}
+
+	public void setInstituicao(Instituicao instituicao) {
+		this.instituicao = instituicao;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idinstituicaoendereco != null ? idinstituicaoendereco.hashCode() : 0);

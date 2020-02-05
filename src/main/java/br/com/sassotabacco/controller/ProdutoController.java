@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,33 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.sassotabacco.model.Produto;
 import br.com.sassotabacco.repository.ProdutoRepository;
 
-@CrossOrigin
+
+
+
+@CrossOrigin("*")
 @RestController
-@RequestMapping("/api/produto")
+@RequestMapping("/api/produtos")
 public class ProdutoController {
 	
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	
-	@PostMapping("/salvar")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Produto salvar(@Valid @RequestBody Produto produto) {
-		return produtoRepository.save(produto);
-	}
-	
-	@GetMapping
-	public ResponseEntity<List<Produto>> listar() {
-		Sort sort = new Sort(Sort.Direction.ASC, "descricao");
-		List<Produto> lista = produtoRepository.findAll(sort);
-		if (lista==null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		return ResponseEntity.ok(lista);
-	}
-	
-	@GetMapping("listar/{descricao}")
-	public ResponseEntity<Optional<List<Produto>>> listarNome(@PathVariable("descricao") String descricao) {
+	@GetMapping("descricao/{descricao}")
+	public ResponseEntity<Optional<List<Produto>>> pesquisar(@PathVariable("descricao") String descricao) {
 		Optional<List<Produto>> lista = produtoRepository.findByDescricaoContainingOrderByDescricao(descricao);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
@@ -66,6 +54,25 @@ public class ProdutoController {
 		return ResponseEntity.ok(lista);
 	}
 	
+	@GetMapping
+	@Cacheable("consultaProdutos")
+	public ResponseEntity<List<Produto>> listar() {
+		Sort sort = new Sort(Sort.Direction.ASC, "Descricao");
+		List<Produto> lista = produtoRepository.findAll(sort);
+		if (lista==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(lista);
+	}
 	
+	
+	@PostMapping("/salvar")
+	@CachePut("consultaProdutos")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Produto salvar(@Valid @RequestBody Produto Produto) {
+		return produtoRepository.save(Produto);
+	}
+
 
 }

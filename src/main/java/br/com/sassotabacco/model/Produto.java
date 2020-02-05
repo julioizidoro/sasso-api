@@ -48,11 +48,11 @@ public class Produto implements Serializable {
     private String cest;
     @Column(name = "pesoliquido")
     private Float pesoliquido;
-    @Column(name = "pesobruto(12,3)")
-    private String pesobruto123;
+    @Column(name = "pesobruto")
+    private String pesobruto;
     @Column(name = "materiaprima")
     private Short materiaprima;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "produtoIdproduto")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "produto")
     private Estoque estoque;
 
     public Produto() {
@@ -134,12 +134,12 @@ public class Produto implements Serializable {
         this.pesoliquido = pesoliquido;
     }
 
-    public String getPesobruto123() {
-        return pesobruto123;
+    public String getPesobruto() {
+        return pesobruto;
     }
 
-    public void setPesobruto123(String pesobruto123) {
-        this.pesobruto123 = pesobruto123;
+    public void setPesobruto123(String pesobruto) {
+        this.pesobruto = pesobruto;
     }
 
     public Short getMateriaprima() {

@@ -23,14 +23,11 @@ import br.com.sassotabacco.util.Criptografia;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
-	
-	
 	
 	@GetMapping("buscar/{situacao}")
 	public ResponseEntity<Optional<List<Usuario>>> buscarSituacao(@PathVariable("situacao") boolean situacao) {
@@ -42,20 +39,7 @@ public class UsuarioController {
 		return ResponseEntity.ok(usuarios);
 	}
 	
-	@PostMapping(path = "/logar", consumes = "application/json", produces = "application/json") 
-	@ResponseStatus(HttpStatus.CREATED)
-		public ResponseEntity<Usuario> logar(@Valid @RequestBody Usuario usuario) {
-		Criptografia criptografia = new Criptografia();
-		String password = (criptografia.encript(usuario.getPassword()));
-		usuario = usuarioRepository.findByUserAndPasswordAndSituacao(usuario.getUser(), password,true);
-		if (usuario==null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		return ResponseEntity.ok(usuario);
-	}
-	
-	@PostMapping("/salvar")
+	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Usuario salvar(@Valid @RequestBody Usuario usuario) {
 		Criptografia criptografia = new Criptografia();
@@ -74,11 +58,11 @@ public class UsuarioController {
 		return ResponseEntity.ok(usuario);
 	}
 	
-	@GetMapping("/{user}/{password}")
-	public ResponseEntity<Usuario> buscar(@PathVariable("user") String user, @PathVariable("password") String password) {
+	@GetMapping("logar/{user}/{password}")
+	public ResponseEntity<Optional<Usuario>> buscar(@PathVariable("user") String user, @PathVariable("password") String password) {
 		Criptografia criptografia = new Criptografia();
 		password = (criptografia.encript(password));
-		Usuario usuario = usuarioRepository.findByUserAndPasswordAndSituacao(user, password,true);
+		Optional<Usuario> usuario = usuarioRepository.findByUserAndPasswordAndSituacao(user, password,true);
 		
 		if (usuario==null) {
 			return ResponseEntity.notFound().build();

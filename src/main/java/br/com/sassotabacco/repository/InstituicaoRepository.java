@@ -12,7 +12,7 @@ import br.com.sassotabacco.model.Instituicao;
 public interface InstituicaoRepository extends JpaRepository<Instituicao, Integer>{
 	
 	Optional<List<Instituicao>> findByTipoOrderByNome(String Tipo);
-	Optional<List<Instituicao>> findByNomeContainingOrEmailContainingOrderByNome(String Nome, String Email);
-	Optional<List<Instituicao>> findByNomeContainingOrderByNome(String Nome);
+	Optional<List<Instituicao>> findByTipoAndNomeContainingOrEmailContainingOrderByNome(String tipo, String Nome, String Email);
+	Optional<List<Instituicao>> findByTipoAndNomeContainingOrderByNome(String tipo, String Nome);
 
 }

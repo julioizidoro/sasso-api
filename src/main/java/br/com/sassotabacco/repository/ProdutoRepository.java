@@ -8,9 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.sassotabacco.model.Produto;
 
 
+
+
+
+
 public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
 	
-	Optional<Produto> findById(int id);
 	Optional<List<Produto>> findByDescricaoContainingOrderByDescricao(String Descricao);
+	Optional<Produto> findById(int id);
 	List<Produto> findAll();
-} 
+
+}

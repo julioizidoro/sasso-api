@@ -37,6 +37,11 @@ public class Conversor {
         String dataFormatada = df.format(data);
         return dataFormatada;
     }
+	
+	public String ConvercaoDataPadrao(Date data) {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String dataFormatada = df.format(data);
+        return dataFormatada;
+    }
+
 }
-
-

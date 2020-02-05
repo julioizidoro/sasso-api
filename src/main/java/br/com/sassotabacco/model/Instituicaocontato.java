@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 /**
  *
@@ -40,7 +41,8 @@ public class Instituicaocontato implements Serializable {
     private String fone;
     @Column(name = "cargo")
     private String cargo;
-    @JoinColumn(name = "instituicao_idinstituicao", referencedColumnName = "idinstituicao")
+    @JsonBackReference	
+	@JoinColumn(name = "instituicao_idinstituicao", referencedColumnName = "idinstituicao")
     @OneToOne(optional = false)
     private Instituicao instituicao;
 

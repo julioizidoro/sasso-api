@@ -6,6 +6,7 @@
 package br.com.sassotabacco.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,8 +39,8 @@ import javax.persistence.Table;
     @Column(name = "valorvenda")
     private Float valorvenda;
     @JoinColumn(name = "produto_idproduto", referencedColumnName = "idproduto")
-    @ManyToOne(optional = false)
-    private Produto produtoIdproduto;
+	@ManyToOne
+	private Produto produto;
 
     public Estoque() {
     }
@@ -80,15 +81,16 @@ import javax.persistence.Table;
         this.valorvenda = valorvenda;
     }
 
-    public Produto getProdutoIdproduto() {
-        return produtoIdproduto;
-    }
 
-    public void setProdutoIdproduto(Produto produtoIdproduto) {
-        this.produtoIdproduto = produtoIdproduto;
-    }
+	public Produto getProduto() {
+		return produto;
+	}
 
-    @Override
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idestoque != null ? idestoque.hashCode() : 0);

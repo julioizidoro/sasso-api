@@ -41,7 +41,7 @@ public class InstituicaoController {
 	
 	@GetMapping("listar/{nome}/{email}")
 	public ResponseEntity<Optional<List<Instituicao>>> listar(@PathVariable("nome") String nome, @PathVariable("email") String email) {
-		Optional<List<Instituicao>> lista = instituicaoResository.findByNomeContainingOrEmailContainingOrderByNome(nome, email);
+		Optional<List<Instituicao>> lista = instituicaoResository.findByTipoAndNomeContainingOrEmailContainingOrderByNome("c", nome, email);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -51,7 +51,7 @@ public class InstituicaoController {
 	
 	@GetMapping("listar/{nome}")
 	public ResponseEntity<Optional<List<Instituicao>>> listarNome(@PathVariable("nome") String nome) {
-		Optional<List<Instituicao>> lista = instituicaoResository.findByNomeContainingOrderByNome(nome);
+		Optional<List<Instituicao>> lista = instituicaoResository.findByTipoAndNomeContainingOrderByNome("c", nome);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -71,6 +71,7 @@ public class InstituicaoController {
 	
 	@PostMapping("/salvar")
 	@ResponseStatus(HttpStatus.CREATED)
+	//@CachePut(value="consultaAsoControle", key="#asoControle.idasocontrole")
 	public Instituicao salvar(@Valid @RequestBody Instituicao instituicao) {
 		return instituicaoResository.save(instituicao);
 	}

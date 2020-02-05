@@ -10,7 +10,7 @@ import br.com.sassotabacco.model.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 		
-		Usuario findByUserAndPasswordAndSituacao(String user, String password, boolean Situacao);
+		Optional<Usuario> findByUserAndPasswordAndSituacao(String user, String password, boolean Situacao);
 		Optional<List<Usuario>> findByNomeContainingOrderByNome(String Nome);
 		Optional<List<Usuario>> findBySituacaoOrderByNome(boolean Situacao);
 }

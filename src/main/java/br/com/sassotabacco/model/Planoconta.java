@@ -33,6 +33,8 @@ public class Planoconta implements Serializable {
     private Integer idplanoconta;
     @Column(name = "descricao")
     private String descricao;
+    @Column(name = "conta")
+    private String conta;
     @JoinColumn(name = "categoriaconta_idcategoriaconta", referencedColumnName = "idcategoriaconta")
     @ManyToOne(optional = false)
     private Categoriaconta categoriaconta;
@@ -62,7 +64,15 @@ public class Planoconta implements Serializable {
 
     
 
-    public Categoriaconta getCategoriaconta() {
+    public String getConta() {
+		return conta;
+	}
+
+	public void setConta(String conta) {
+		this.conta = conta;
+	}
+
+	public Categoriaconta getCategoriaconta() {
 		return categoriaconta;
 	}
 
