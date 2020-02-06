@@ -33,8 +33,6 @@ public class Instituicaoendereco implements Serializable {
     @Basic(optional = false)
     @Column(name = "idinstituicaoendereco")
     private Integer idinstituicaoendereco;
-    @Column(name = "tipo")
-    private String tipo;
     @Column(name = "logradouro")
     private String logradouro;
     @Column(name = "numero")
@@ -67,14 +65,6 @@ public class Instituicaoendereco implements Serializable {
 
     public void setIdinstituicaoendereco(Integer idinstituicaoendereco) {
         this.idinstituicaoendereco = idinstituicaoendereco;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public String getLogradouro() {

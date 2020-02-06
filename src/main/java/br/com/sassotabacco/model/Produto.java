@@ -8,13 +8,11 @@ package br.com.sassotabacco.model;
 import java.io.Serializable;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -33,8 +31,8 @@ public class Produto implements Serializable {
     private Integer idproduto;
     @Column(name = "descricao")
     private String descricao;
-    @Column(name = "codgiobarras")
-    private String codgiobarras;
+    @Column(name = "codigobarras")
+    private String codigobarras;
     @Column(name = "unidade")
     private String unidade;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -49,11 +47,9 @@ public class Produto implements Serializable {
     @Column(name = "pesoliquido")
     private Float pesoliquido;
     @Column(name = "pesobruto")
-    private String pesobruto;
+    private Float pesobruto;
     @Column(name = "materiaprima")
-    private Short materiaprima;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "produto")
-    private Estoque estoque;
+    private boolean materiaprima;
 
     public Produto() {
     }
@@ -78,15 +74,16 @@ public class Produto implements Serializable {
         this.descricao = descricao;
     }
 
-    public String getCodgiobarras() {
-        return codgiobarras;
-    }
+    public String getCodigobarras() {
+		return codigobarras;
+	}
 
-    public void setCodgiobarras(String codgiobarras) {
-        this.codgiobarras = codgiobarras;
-    }
+	public void setCodigobarras(String codigobarras) {
+		this.codigobarras = codigobarras;
+	}
 
-    public String getUnidade() {
+	
+	public String getUnidade() {
         return unidade;
     }
 
@@ -134,24 +131,24 @@ public class Produto implements Serializable {
         this.pesoliquido = pesoliquido;
     }
 
-    public String getPesobruto() {
-        return pesobruto;
-    }
+   
+    public Float getPesobruto() {
+		return pesobruto;
+	}
 
-    public void setPesobruto123(String pesobruto) {
-        this.pesobruto = pesobruto;
-    }
+	public void setPesobruto(Float pesobruto) {
+		this.pesobruto = pesobruto;
+	}
 
-    public Short getMateriaprima() {
-        return materiaprima;
-    }
+	public boolean isMateriaprima() {
+		return materiaprima;
+	}
 
-    public void setMateriaprima(Short materiaprima) {
-        this.materiaprima = materiaprima;
-    }
+	public void setMateriaprima(boolean materiaprima) {
+		this.materiaprima = materiaprima;
+	}
 
-    
-    @Override
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idproduto != null ? idproduto.hashCode() : 0);

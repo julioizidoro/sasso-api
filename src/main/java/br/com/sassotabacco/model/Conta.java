@@ -36,6 +36,8 @@ public class Conta implements Serializable {
     private Date datasaldo;
 	@Column(name = "saldoinicial")
 	private float saldoinicial;;
+	@Column(name = "logo")
+	private String logo;
 	@Transient
 	private float saldoatual;
 
@@ -94,6 +96,18 @@ public class Conta implements Serializable {
 	public void setSaldoatual(float saldoatual) {
 		this.saldoatual = saldoatual;
 	}
+
+	public String getLogo() {
+		return logo;
+	}
+
+
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+
 
 	@Override
 	public int hashCode() {

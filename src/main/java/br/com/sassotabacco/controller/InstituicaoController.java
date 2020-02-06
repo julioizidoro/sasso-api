@@ -73,6 +73,12 @@ public class InstituicaoController {
 	@ResponseStatus(HttpStatus.CREATED)
 	//@CachePut(value="consultaAsoControle", key="#asoControle.idasocontrole")
 	public Instituicao salvar(@Valid @RequestBody Instituicao instituicao) {
+		if (instituicao.getInstituicaocontato()!= null) {
+			instituicao.getInstituicaocontato().setInstituicao(instituicao);
+		}
+		if (instituicao.getInstituicaoendereco()!=null) {
+			instituicao.getInstituicaoendereco().setInstituicao(instituicao);
+		}
 		return instituicaoResository.save(instituicao);
 	}
 
