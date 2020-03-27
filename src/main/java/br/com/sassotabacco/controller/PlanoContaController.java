@@ -41,27 +41,7 @@ public class PlanoContaController {
 		
 		return ResponseEntity.ok(lista);
 	}
-	
-	@GetMapping("conta/{conta}")
-	public ResponseEntity<Optional<List<Planoconta>>> pesquisarConta(@PathVariable("conta") String conta) {
-		Optional<List<Planoconta>> lista = planoContaRepository.findByContaContainingOrderByDescricao(conta);
-		if (lista==null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		return ResponseEntity.ok(lista);
-	}
-	
-	@GetMapping("bens")
-	public ResponseEntity<Optional<List<Planoconta>>> pesquisarBens() {
-		Optional<List<Planoconta>> lista = planoContaRepository.findLancamentoBens();
-		if (lista==null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		return ResponseEntity.ok(lista);
-	}
-	
+				
 	@GetMapping("grupo/{grupo}")
 	public ResponseEntity<Optional<List<Planoconta>>> pesquisarGrupo(@PathVariable("grupo") int grupo) {
 		Optional<List<Planoconta>> lista = planoContaRepository.findGrupo(grupo);

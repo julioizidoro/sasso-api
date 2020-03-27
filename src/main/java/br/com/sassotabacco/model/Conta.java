@@ -1,7 +1,6 @@
 package br.com.sassotabacco.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -10,9 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "conta")
@@ -29,16 +25,6 @@ public class Conta implements Serializable {
 	private Integer idconta;
 	@Column(name = "descricao")
 	private String descricao;
-	@Column(name = "saldoinicial")
-	private float saldoinicial;
-	@Column(name = "entradas")
-	private float entradas;
-	@Column(name = "saidas")
-	private float saidas;
-	@Column(name = "saldoliquido")
-	private float saldoliquido;
-	@Column(name = "saldo")
-	private float saldo;
 	@Column(name = "logo")
 	private String logo;
 	
@@ -66,72 +52,6 @@ public class Conta implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	
-	
-	public float getSaldoinicial() {
-		return saldoinicial;
-	}
-
-
-
-	public void setSaldoinicial(float saldoinicial) {
-		this.saldoinicial = saldoinicial;
-	}
-
-
-
-	public float getEntradas() {
-		return entradas;
-	}
-
-
-
-	public void setEntradas(float entradas) {
-		this.entradas = entradas;
-	}
-
-
-
-	public float getSaidas() {
-		return saidas;
-	}
-
-
-
-	public void setSaidas(float saidas) {
-		this.saidas = saidas;
-	}
-
-
-
-	public float getSaldoliquido() {
-		return saldoliquido;
-	}
-
-
-
-	public void setSaldoliquido(float saldoliquido) {
-		this.saldoliquido = saldoliquido;
-	}
-
-
-
-	public float getSaldo() {
-		return saldo;
-	}
-
-
-
-	public void setSaldo(float saldo) {
-		this.saldo = saldo;
-	}
-
-
-
-	
-
-
 
 	public String getLogo() {
 		return logo;

@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.com.sassotabacco.model.Contas;
+import br.com.sassotabacco.model.Contasaldo;
 import br.com.sassotabacco.model.Fluxocaixa;
 import br.com.sassotabacco.model.Fluxocontas;
+import br.com.sassotabacco.repository.ContaSaldoRepository;
 import br.com.sassotabacco.repository.ContasRepository;
 import br.com.sassotabacco.repository.FluxoCaixaRepository;
 import br.com.sassotabacco.repository.FluxoContasRepository;
@@ -36,7 +38,7 @@ import br.com.sassotabacco.util.Conversor;
 
 @CrossOrigin
 @RestController	
-@RequestMapping("/api/cp")
+@RequestMapping("/cp")
 public class ContasPagarController {
 	
 	@Autowired
@@ -47,6 +49,8 @@ public class ContasPagarController {
 	private FluxoContasRepository fluxoContasRepository;
 	@Autowired
 	private S3Service s3Service;
+	@Autowired
+	private ContaSaldoRepository contaSaldoRepository;
 	
 	//Consulta por ID
 	@GetMapping("/id/{id}")
@@ -210,6 +214,11 @@ public class ContasPagarController {
 			fluxoContas.setFluxocaixa(fluxoCaixa);
 			fluxoContasRepository.save(fluxoContas);
 		}
+		Contasaldo contaSaldo = contaSaldoRepository.findByConta(conta.getConta().getIdconta(),"@");
+		contaSaldo.setSaldoinicial(contaSaldo.getSaldoliquido() - conta.getValorpago());
+		contaSaldo.setEntradas(contaSaldo.getSaidas() + conta.getValorpago());
+		contaSaldo.setSaldo(contaSaldo.getSaldo() - conta.getValorpago());
+		contaSaldoRepository.save(contaSaldo);
 		return contasRepository.save(conta);
 	}
 	
@@ -219,5 +228,40 @@ public class ContasPagarController {
 		URI uri = s3Service.uploadFileCP(file);
 		return ResponseEntity.created(uri).build();
 	}
+	
+	@GetMapping("/hoje")
+	public ResponseEntity<Float>  vencidasHoje() {
+		Float valor = contasRepository.valorContasVencimentoHoje(new Date(),"p");
+		if (valor == null) {
+			valor = 0.0f;
+		}
+		return ResponseEntity.ok(valor);
+	}
+	
+	@GetMapping("/vencidas")
+	public ResponseEntity<Float>  vencidas() {
+		Float valor = contasRepository.valorContasVencidas(new Date(),"p");
+		if (valor == null) {
+			valor = 0.0f;
+		}
+		return ResponseEntity.ok(valor);
+	}
+	
+	@GetMapping("/restomes")
+	public ResponseEntity<Float>  vencerRestoMes() {
+		Conversor c = new Conversor();
+		String data = c.ConvercaoDataPadrao(new Date());
+		String mesano = data.substring(6,10) + "-" + data.substring(3,5);
+		String mes = data.substring(3,5);
+		
+		String cData =  mesano + "-" + String.valueOf(c.getRestoMes(Integer.parseInt(mes)));
+		Date dataFinal = c.ConvercaoStringData(cData);
+		Float valor = contasRepository.contasRestoMes(new Date(), dataFinal,"r");
+		if (valor == null) {
+			valor = 0.0f;
+		}
+		return ResponseEntity.ok(valor);
+	}
+
 
 }

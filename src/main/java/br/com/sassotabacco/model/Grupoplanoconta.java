@@ -27,9 +27,6 @@ public class Grupoplanoconta implements Serializable {
     @Size(max = 45)
     @Column(name = "descricao")
     private String descricao;
-    @Size(max = 100)
-    @Column(name = "conta")
-    private String conta;
     
 
     public Grupoplanoconta() {
@@ -50,14 +47,6 @@ public class Grupoplanoconta implements Serializable {
     public String getDescricao() {
         return descricao;
     }
-
-    public String getConta() {
-		return conta;
-	}
-
-	public void setConta(String conta) {
-		this.conta = conta;
-	}
 
 	public void setDescricao(String descricao) {
         this.descricao = descricao;

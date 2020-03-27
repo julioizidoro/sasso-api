@@ -76,6 +76,8 @@ public class Contas implements Serializable{
     @JoinColumn(name = "planoconta_idplanoconta", referencedColumnName = "idplanoconta")
     @OneToOne(optional = false)
     private Planoconta planoconta;
+    
+    
     @OneToMany(mappedBy = "contas")
     private List<Contasarquivos> contasarquivosList;
 
@@ -287,6 +289,18 @@ public class Contas implements Serializable{
 
 	public void setCodigobarras(String codigobarras) {
 		this.codigobarras = codigobarras;
+	}
+
+
+
+	public Conta getConta() {
+		return conta;
+	}
+
+
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 

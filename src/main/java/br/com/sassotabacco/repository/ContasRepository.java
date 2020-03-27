@@ -46,5 +46,21 @@ public interface ContasRepository extends JpaRepository<Contas, Integer>{
 	@Query("Select c from Contas c where c.instituicao.nome like CONCAT('%', :nome, '%') and c.datavencimento>= :datainicio and c.datavencimento<= :datafinal and c.tipo= :tipo and c.valorpago>0 order by c.datavencimento")
 	Optional<List<Contas>> findAllContasDataVencimentoPagas(@Param("nome") String nome, @Param("datainicio") Date datainicio, @Param("datafinal") Date datafina, @Param("tipo") String tipo);
 	
+	//Consulta vencendo hoje
+	@Query(
+	value = "select distinct sum(valorparcela) as valorcontas From contas where datavencimento= :data and tipo= :tipo and valorpago=0 ",
+	nativeQuery = true)
+		Float valorContasVencimentoHoje(@Param("data") Date data, @Param("tipo") String tipo);
+	
+	@Query(
+	value = "select distinct sum(valorparcela) as valorcontas From contas where datavencimento> :datainicial and datavencimento<= :datafinal  and tipo= :tipo and valorpago=0 ",
+	nativeQuery = true)
+		Float contasRestoMes(@Param("datainicial") Date datainicial,  @Param("datafinal") Date datafinal, @Param("tipo") String tipo);
+	
+	@Query(
+	value = "select distinct sum(valorparcela) as valorcontas From contas where datavencimento< :data  and tipo= :tipo and valorpago=0 ",
+	nativeQuery = true)
+		Float valorContasVencidas(@Param("data") Date data, @Param("tipo") String tipo);
+	
 
 }

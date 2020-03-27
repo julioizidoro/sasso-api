@@ -25,7 +25,7 @@ import br.com.sassotabacco.repository.GrupoPlanoContaRepository;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/grupoplanocontas")
+@RequestMapping("/grupoplanocontas")
 public class GrupoPlanoContaController {
 	
 	@Autowired
@@ -41,15 +41,7 @@ public class GrupoPlanoContaController {
 		return ResponseEntity.ok(lista);
 	}
 	
-	@GetMapping("conta/{conta}")
-	public ResponseEntity<Optional<List<Grupoplanoconta>>> pesquisarConta(@PathVariable("conta") String conta) {
-		Optional<List<Grupoplanoconta>> lista = grupoPlanoContaRepository.findByContaContainingOrderByDescricao(conta);
-		if (lista==null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		return ResponseEntity.ok(lista);
-	}
+	
 	
 	@GetMapping("id/{id}")
 	public ResponseEntity<Optional<Grupoplanoconta>> pesquisar(@PathVariable("id") int id) {

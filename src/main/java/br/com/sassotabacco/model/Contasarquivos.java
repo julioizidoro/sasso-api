@@ -28,8 +28,8 @@ public class Contasarquivos implements Serializable {
     @Basic(optional = false)
     @Column(name = "idcontasarquivos")
     private Integer idcontasarquivos;
-    @Column(name = "nomeorigial")
-    private String nomeorigial;
+    @Column(name = "nomeoriginal")
+    private String nomeoriginal;
     @Column(name = "uri")
     private String uri;
     @JsonBackReference
@@ -52,15 +52,17 @@ public class Contasarquivos implements Serializable {
         this.idcontasarquivos = idcontasarquivos;
     }
 
-    public String getNomeorigial() {
-        return nomeorigial;
-    }
+    
 
-    public void setNomeorigial(String nomeorigial) {
-        this.nomeorigial = nomeorigial;
-    }
+    public String getNomeoriginal() {
+		return nomeoriginal;
+	}
 
-    public String getUri() {
+	public void setNomeoriginal(String nomeoriginal) {
+		this.nomeoriginal = nomeoriginal;
+	}
+
+	public String getUri() {
         return uri;
     }
 
