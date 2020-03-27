@@ -34,7 +34,7 @@ import br.com.sassotabacco.util.Conversor;
 
 @CrossOrigin
 @RestController	
-@RequestMapping("/api/cr")
+@RequestMapping("/cr")
 public class ContasReceberController {
 	
 	@Autowired

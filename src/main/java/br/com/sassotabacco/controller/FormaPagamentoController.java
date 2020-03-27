@@ -16,7 +16,7 @@ import br.com.sassotabacco.repository.FormaPagamentoRepository;
 
 @CrossOrigin
 @RestController	
-@RequestMapping("/api/formapagamento")
+@RequestMapping("/formapagamento")
 public class FormaPagamentoController {
 	
 	@Autowired

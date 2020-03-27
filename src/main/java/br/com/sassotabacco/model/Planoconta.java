@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.sassotabacco.model;
 
 import java.io.Serializable;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,10 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
- * @author julio.silva
+ * @author julioizidoro
  */
 @Entity
 @Table(name = "planoconta")
@@ -31,14 +26,20 @@ public class Planoconta implements Serializable {
     @Basic(optional = false)
     @Column(name = "idplanoconta")
     private Integer idplanoconta;
+    @Size(max = 100)
     @Column(name = "descricao")
     private String descricao;
+    @Size(max = 10)
     @Column(name = "conta")
     private String conta;
-    @JoinColumn(name = "categoriaconta_idcategoriaconta", referencedColumnName = "idcategoriaconta")
+    @JoinColumn(name = "grupoplanoconta_idgrupoplanoconta", referencedColumnName = "idgrupoplanoconta")
     @ManyToOne(optional = false)
-    private Categoriaconta categoriaconta;
+    private Grupoplanoconta grupoplanoconta;
+    @Column(name = "lancamentobens")
+    private boolean lancamentobens;
 
+    
+    
     public Planoconta() {
     }
 
@@ -62,8 +63,6 @@ public class Planoconta implements Serializable {
         this.descricao = descricao;
     }
 
-    
-
     public String getConta() {
 		return conta;
 	}
@@ -72,12 +71,20 @@ public class Planoconta implements Serializable {
 		this.conta = conta;
 	}
 
-	public Categoriaconta getCategoriaconta() {
-		return categoriaconta;
+	public Grupoplanoconta getGrupoplanoconta() {
+        return grupoplanoconta;
+    }
+
+    public void setGrupoplanoconta(Grupoplanoconta grupoplanoconta) {
+        this.grupoplanoconta = grupoplanoconta;
+    }
+
+    public boolean isLancamentobens() {
+		return lancamentobens;
 	}
 
-	public void setCategoriaconta(Categoriaconta categoriaconta) {
-		this.categoriaconta = categoriaconta;
+	public void setLancamentobens(boolean lancamentobens) {
+		this.lancamentobens = lancamentobens;
 	}
 
 	@Override
@@ -102,7 +109,7 @@ public class Planoconta implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Planoconta[ idplanoconta=" + idplanoconta + " ]";
+        return "br.com.tecseg.mavenproject1.Planoconta[ idplanoconta=" + idplanoconta + " ]";
     }
     
 }

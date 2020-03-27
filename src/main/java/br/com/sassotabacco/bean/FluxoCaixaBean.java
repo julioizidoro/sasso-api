@@ -29,7 +29,7 @@ public class FluxoCaixaBean {
 		for (int i=0;i<listaFluxo.size();i++) {
 			Date data = listaFluxo.get(i).getData();
 			System.out.print(data);
-			float saldo = fluxoCaixaRepository.calculaSaldo(data, idconta);
+			float saldo =0;// fluxoCaixaRepository.calculaSaldo(data, idconta);
 			
 			this.listaFluxo.get(i).setSaldoanterior(saldo);
 			saldo = saldo - (listaFluxo.get(i).getEntradas() + listaFluxo.get(i).getSaidasprevistas());

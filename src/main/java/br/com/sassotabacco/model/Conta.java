@@ -29,17 +29,19 @@ public class Conta implements Serializable {
 	private Integer idconta;
 	@Column(name = "descricao")
 	private String descricao;
-	@Column(name = "banco")
-	private String banco;
-	@Column(name = "datasaldo")
-	@Temporal(TemporalType.DATE)
-    private Date datasaldo;
 	@Column(name = "saldoinicial")
-	private float saldoinicial;;
+	private float saldoinicial;
+	@Column(name = "entradas")
+	private float entradas;
+	@Column(name = "saidas")
+	private float saidas;
+	@Column(name = "saldoliquido")
+	private float saldoliquido;
+	@Column(name = "saldo")
+	private float saldo;
 	@Column(name = "logo")
 	private String logo;
-	@Transient
-	private float saldoatual;
+	
 
 	public Conta() {
 
@@ -65,37 +67,71 @@ public class Conta implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public String getBanco() {
-		return banco;
-	}
-
-	public void setBanco(String banco) {
-		this.banco = banco;
-	}
-
-	public Date getDatasaldo() {
-		return datasaldo;
-	}
-
-	public void setDatasaldo(Date datasaldo) {
-		this.datasaldo = datasaldo;
-	}
-
+	
+	
 	public float getSaldoinicial() {
 		return saldoinicial;
 	}
+
+
 
 	public void setSaldoinicial(float saldoinicial) {
 		this.saldoinicial = saldoinicial;
 	}
 
-	public float getSaldoatual() {
-		return saldoatual;
+
+
+	public float getEntradas() {
+		return entradas;
 	}
 
-	public void setSaldoatual(float saldoatual) {
-		this.saldoatual = saldoatual;
+
+
+	public void setEntradas(float entradas) {
+		this.entradas = entradas;
 	}
+
+
+
+	public float getSaidas() {
+		return saidas;
+	}
+
+
+
+	public void setSaidas(float saidas) {
+		this.saidas = saidas;
+	}
+
+
+
+	public float getSaldoliquido() {
+		return saldoliquido;
+	}
+
+
+
+	public void setSaldoliquido(float saldoliquido) {
+		this.saldoliquido = saldoliquido;
+	}
+
+
+
+	public float getSaldo() {
+		return saldo;
+	}
+
+
+
+	public void setSaldo(float saldo) {
+		this.saldo = saldo;
+	}
+
+
+
+	
+
+
 
 	public String getLogo() {
 		return logo;

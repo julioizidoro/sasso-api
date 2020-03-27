@@ -21,7 +21,7 @@ import br.com.sassotabacco.repository.ContasArquivosRepository;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/ca")
+@RequestMapping("/ca")
 public class ContasArquivosController {
 	
 	@Autowired

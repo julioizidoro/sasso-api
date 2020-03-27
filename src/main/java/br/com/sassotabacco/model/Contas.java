@@ -18,77 +18,92 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
-
 @Entity
 @Table(name = "contas")
-public class Contas implements Serializable {
-	
+public class Contas implements Serializable{
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Id
+	
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idcontas")
     private Integer idcontas;
-	@Column(name = "documento")
+    @Size(max = 45)
+    @Column(name = "documento")
     private String documento;
-	@Column(name = "dataemissao")
-	@Temporal(TemporalType.DATE)
+    @Column(name = "dataemissao")
+    @Temporal(TemporalType.DATE)
     private Date dataemissao;
-	@Column(name = "datavencimento")
-	@Temporal(TemporalType.DATE)
+    @Column(name = "datavencimento")
+    @Temporal(TemporalType.DATE)
     private Date datavencimento;
-	@Column(name = "numeroparcela")
-    private Integer numeroparcela;
-	@Column(name = "valorparcela")
+    @Column(name = "numeroparcela")
+    private int numeroparcela;
+    @Column(name = "valorparcela")
     private Float valorparcela;
-	@Column(name = "desconto")
+    @Column(name = "desconto")
     private Float desconto;
-	@Column(name = "juros")
+    @Column(name = "juros")
     private Float juros;
-	@Column(name = "datapagamento")
-	@Temporal(TemporalType.DATE)
+    @Column(name = "datapagamento")
+    @Temporal(TemporalType.DATE)
     private Date datapagamento;
-	@Column(name = "valorpago")
-    private Float valorpago;
-	@Column(name = "observacao")
+    @Column(name = "valorpago")
+    private Float valorpago;  
+	@Size(max = 200)
+    @Column(name = "observacao")
     private String observacao;
 	@Column(name = "codigobarras")
     private String codigobarras;
-	@Size(max = 1)
+    @Size(max = 1)
     @Column(name = "tipo")
     private String tipo;
-	@JoinColumn(name = "planoconta_idplanoconta", referencedColumnName = "idplanoconta")
-    @OneToOne(optional = false)
-    private Planoconta planoconta;
+    
     @JoinColumn(name = "instituicao_idinstituicao", referencedColumnName = "idinstituicao")
     @OneToOne(optional = false)
     private Instituicao instituicao;
     @JoinColumn(name = "formapagamento_idformapagamento", referencedColumnName = "idformapagamento")
     @OneToOne(optional = false)
     private Formapagamento formapagamento;
+    
     @JoinColumn(name = "conta_idconta", referencedColumnName = "idconta")
     @OneToOne(optional = false)
     private Conta conta;
+    @JoinColumn(name = "planoconta_idplanoconta", referencedColumnName = "idplanoconta")
+    @OneToOne(optional = false)
+    private Planoconta planoconta;
     @OneToMany(mappedBy = "contas")
     private List<Contasarquivos> contasarquivosList;
-    
-    
-	public Contas() {
-	
+
+	public List<Contasarquivos> getContasarquivosList() {
+		return contasarquivosList;
 	}
 
 
+
+	public void setContasarquivosList(List<Contasarquivos> contasarquivosList) {
+		this.contasarquivosList = contasarquivosList;
+	}
+
+
+
+	public Contas() {
+		
+	}
+
 	
+
 	public Integer getIdcontas() {
 		return idcontas;
 	}
 
 
 
-	public void setIdcosnta(Integer idcontas) {
+	public void setIdcontas(Integer idcontas) {
 		this.idcontas = idcontas;
 	}
 
@@ -105,9 +120,11 @@ public class Contas implements Serializable {
 	}
 
 
+
 	public Date getDataemissao() {
 		return dataemissao;
 	}
+
 
 
 	public void setDataemissao(Date dataemissao) {
@@ -115,9 +132,11 @@ public class Contas implements Serializable {
 	}
 
 
+
 	public Date getDatavencimento() {
 		return datavencimento;
 	}
+
 
 
 	public void setDatavencimento(Date datavencimento) {
@@ -125,14 +144,19 @@ public class Contas implements Serializable {
 	}
 
 
-	public Integer getNumeroparcela() {
+
+	
+
+	public int getNumeroparcela() {
 		return numeroparcela;
 	}
 
 
-	public void setNumeroparcela(Integer numeroparcela) {
+
+	public void setNumeroparcela(int numeroparcela) {
 		this.numeroparcela = numeroparcela;
 	}
+
 
 
 	public Float getValorparcela() {
@@ -140,9 +164,11 @@ public class Contas implements Serializable {
 	}
 
 
+
 	public void setValorparcela(Float valorparcela) {
 		this.valorparcela = valorparcela;
 	}
+
 
 
 	public Float getDesconto() {
@@ -150,9 +176,11 @@ public class Contas implements Serializable {
 	}
 
 
+
 	public void setDesconto(Float desconto) {
 		this.desconto = desconto;
 	}
+
 
 
 	public Float getJuros() {
@@ -160,9 +188,11 @@ public class Contas implements Serializable {
 	}
 
 
+
 	public void setJuros(Float juros) {
 		this.juros = juros;
 	}
+
 
 
 	public Date getDatapagamento() {
@@ -170,9 +200,11 @@ public class Contas implements Serializable {
 	}
 
 
+
 	public void setDatapagamento(Date datapagamento) {
 		this.datapagamento = datapagamento;
 	}
+
 
 
 	public Float getValorpago() {
@@ -180,9 +212,11 @@ public class Contas implements Serializable {
 	}
 
 
+
 	public void setValorpago(Float valorpago) {
 		this.valorpago = valorpago;
 	}
+
 
 
 	public String getObservacao() {
@@ -190,75 +224,17 @@ public class Contas implements Serializable {
 	}
 
 
+
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
 
 
-	public String getCodigobarras() {
-		return codigobarras;
-	}
-
-
-	public void setCodigobarras(String codigobarras) {
-		this.codigobarras = codigobarras;
-	}
-
-
-	public Planoconta getPlanoconta() {
-		return planoconta;
-	}
-
-
-	public void setPlanoconta(Planoconta planoconta) {
-		this.planoconta = planoconta;
-	}
-
-
-	public Instituicao getInstituicao() {
-		return instituicao;
-	}
-
-
-	public void setInstituicao(Instituicao instituicao) {
-		this.instituicao = instituicao;
-	}
-
-
-	public Formapagamento getFormapagamento() {
-		return formapagamento;
-	}
-
-
-	public void setFormapagamento(Formapagamento formapagamento) {
-		this.formapagamento = formapagamento;
-	}
-
-	public Conta getConta() {
-		return conta;
-	}
-
-
-	public void setConta(Conta conta) {
-		this.conta = conta;
-	}
-
-
-	public List<Contasarquivos> getContasarquivosList() {
-		return contasarquivosList;
-	}
-
-
-	public void setContasarquivosList(List<Contasarquivos> contasarquivosList) {
-		this.contasarquivosList = contasarquivosList;
-	}
-
-
-	
 
 	public String getTipo() {
 		return tipo;
 	}
+
 
 
 	public void setTipo(String tipo) {
@@ -267,13 +243,50 @@ public class Contas implements Serializable {
 
 
 
-	
+	public Planoconta getPlanoconta() {
+		return planoconta;
+	}
 
 
 
-	@Override
-	public String toString() {
-		return "Contas [idcosnta=" + idcontas + ", documento=" + documento + "]";
+	public void setPlanoconta(Planoconta planoconta) {
+		this.planoconta = planoconta;
+	}
+
+
+
+	public Instituicao getInstituicao() {
+		return instituicao;
+	}
+
+
+
+	public void setInstituicao(Instituicao instituicao) {
+		this.instituicao = instituicao;
+	}
+
+
+
+	public Formapagamento getFormapagamento() {
+		return formapagamento;
+	}
+
+
+
+	public void setFormapagamento(Formapagamento formapagamento) {
+		this.formapagamento = formapagamento;
+	}
+
+
+
+	public String getCodigobarras() {
+		return codigobarras;
+	}
+
+
+
+	public void setCodigobarras(String codigobarras) {
+		this.codigobarras = codigobarras;
 	}
 
 
@@ -285,8 +298,6 @@ public class Contas implements Serializable {
 		result = prime * result + ((idcontas == null) ? 0 : idcontas.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -305,12 +316,8 @@ public class Contas implements Serializable {
 		return true;
 	}
 
-
-	
-
-	
-	
-    
-    
-
+	@Override
+	public String toString() {
+		return "Contas [idcontas=" + idcontas + "]";
+	}
 }

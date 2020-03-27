@@ -28,7 +28,7 @@ import br.com.sassotabacco.repository.ProdutoRepository;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/produtos")
+@RequestMapping("/produtos")
 public class ProdutoController {
 	
 	@Autowired

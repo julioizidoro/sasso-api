@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,33 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.sassotabacco.model.Planoconta;
 import br.com.sassotabacco.repository.PlanoContaRepository;
 
-@CrossOrigin
+@CrossOrigin("*")
 @RestController
-@RequestMapping("/api/planoconta")
+@RequestMapping("/planocontas")
 public class PlanoContaController {
 	
 	@Autowired
 	private PlanoContaRepository planoContaRepository;
 	
-	@PostMapping("/salvar")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Planoconta salvar(@Valid @RequestBody Planoconta planoConta) {
-		return planoContaRepository.save(planoConta);
-	}
 	
-	@GetMapping
-	public ResponseEntity<List<Planoconta>> listar() {
-		Sort sort = new Sort(Sort.Direction.ASC, "descricao");
-		List<Planoconta> lista = planoContaRepository.findAll(sort);
-		if (lista==null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		return ResponseEntity.ok(lista);
-	}
-	
-	@GetMapping("listar/{descricao}")
-	public ResponseEntity<Optional<List<Planoconta>>> listarDescricao(@PathVariable("descricao") String descricao) {
+	@GetMapping("descricao/{descricao}")
+	public ResponseEntity<Optional<List<Planoconta>>> pesquisarDescricao(@PathVariable("descricao") String descricao) {
 		Optional<List<Planoconta>> lista = planoContaRepository.findByDescricaoContainingOrderByDescricao(descricao);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
@@ -56,9 +42,29 @@ public class PlanoContaController {
 		return ResponseEntity.ok(lista);
 	}
 	
-	@GetMapping("categoria/{idcategoria}")
-	public ResponseEntity<Optional<List<Planoconta>>> getCategoria(@PathVariable("idcategoria") int idCategoria) {
-		Optional<List<Planoconta>> lista = planoContaRepository.findCategoria(idCategoria);
+	@GetMapping("conta/{conta}")
+	public ResponseEntity<Optional<List<Planoconta>>> pesquisarConta(@PathVariable("conta") String conta) {
+		Optional<List<Planoconta>> lista = planoContaRepository.findByContaContainingOrderByDescricao(conta);
+		if (lista==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(lista);
+	}
+	
+	@GetMapping("bens")
+	public ResponseEntity<Optional<List<Planoconta>>> pesquisarBens() {
+		Optional<List<Planoconta>> lista = planoContaRepository.findLancamentoBens();
+		if (lista==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(lista);
+	}
+	
+	@GetMapping("grupo/{grupo}")
+	public ResponseEntity<Optional<List<Planoconta>>> pesquisarGrupo(@PathVariable("grupo") int grupo) {
+		Optional<List<Planoconta>> lista = planoContaRepository.findGrupo(grupo);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -75,5 +81,27 @@ public class PlanoContaController {
 		
 		return ResponseEntity.ok(lista);
 	}
+	
+	@GetMapping
+	@Cacheable("consultaPlanoContas")
+	public ResponseEntity<List<Planoconta>> listar() {
+		Sort sort = new Sort(Sort.Direction.ASC, "Descricao");
+		List<Planoconta> lista = planoContaRepository.findAll(sort);
+		if (lista==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(lista);
+	}
+	
+	
+	@PostMapping("/salvar")
+	@CachePut("consultaPlanoContas")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Planoconta salvar(@Valid @RequestBody Planoconta Planoconta) {
+		return planoContaRepository.save(Planoconta);
+	}
+	
+	
 
 }

@@ -46,15 +46,6 @@ public class AcessoController {
 		return ResponseEntity.ok(acesso.get());
 	}
 	
-	@GetMapping("listar/produto/{descricao}")
-	public ResponseEntity<Optional<List<Acesso>>> listar(@PathVariable("nome") String nome) {
-		Optional<List<Acesso>> lista = acessoRepository.findByNomeContainingOrderByNome(nome);
-		if (lista==null) {
-			return ResponseEntity.notFound().build();
-		}
-		
-		return ResponseEntity.ok(lista);
-	}
 	
 	@GetMapping("listar")
 	public ResponseEntity<List<Acesso>> listar() {

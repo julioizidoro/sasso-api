@@ -19,13 +19,13 @@ import br.com.sassotabacco.util.Conversor;
 
 @CrossOrigin
 @RestController	
-@RequestMapping("/api/fluxocaixa")
+@RequestMapping("/fluxocaixa")
 public class FluxoCaixaController {
 	
 	@Autowired
 	private FluxoCaixaRepository fluxoCaixaRepository;
 	
-	@GetMapping("listar/{idbanco}")
+	@GetMapping
 	@Cacheable("consultaFluxoCaixa")
 	public ResponseEntity<List<Fluxocaixa>> listarData() {
 		Conversor c = new Conversor();
@@ -41,9 +41,9 @@ public class FluxoCaixaController {
 		return ResponseEntity.ok(lista);
 	}
 	
-	@GetMapping("listar/{idconta}")
+	@GetMapping("listar")
 	@Cacheable("consultaFluxoCaixa")
-	public ResponseEntity<List<Fluxocaixa>> listarInicial(@PathVariable("idconta") int idconta) {
+	public ResponseEntity<List<Fluxocaixa>> listarInicial() {
 		Conversor c = new Conversor();
 		Date datainicial = c.SomarDiasData(new Date(), -1);
 		List<Fluxocaixa> lista = fluxoCaixaRepository.findAllFluxoCaixaInicial(datainicial);
@@ -51,7 +51,7 @@ public class FluxoCaixaController {
 			return ResponseEntity.notFound().build();
 		}
 		FluxoCaixaBean fluxoCaixaBean = new FluxoCaixaBean(lista, fluxoCaixaRepository);
-		fluxoCaixaBean.calcularSaldos(idconta);
+		fluxoCaixaBean.calcularSaldos(0);
 		lista = fluxoCaixaBean.getListaFluxo();
 		return ResponseEntity.ok(lista);
 	}

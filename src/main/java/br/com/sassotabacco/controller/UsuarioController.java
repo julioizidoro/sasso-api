@@ -23,7 +23,7 @@ import br.com.sassotabacco.util.Criptografia;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 	
 	@Autowired

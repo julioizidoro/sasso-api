@@ -29,7 +29,7 @@ public interface FluxoCaixaRepository extends JpaRepository<Fluxocaixa, Integer>
 	List<Fluxocaixa> findData(@Param("data") Date data);
 	
 	@Query(
-			value = "select distinct (sum(entradas) - sum(saidas) ) as saldo From fluxocaixa where data< :data and conta.idconta= :idconta ",
+			value = "select distinct (sum(entradas) - sum(saidas) ) as saldo From fluxocaixa where data< :data ",
 			nativeQuery = true)
-		float calculaSaldo(@Param("data") Date data, @Param("data") int idconta);
+		float calculaSaldo(@Param("data") Date data);
 }

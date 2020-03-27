@@ -23,7 +23,7 @@ import br.com.sassotabacco.repository.ProdutoRepository;
 
 @CrossOrigin
 @RestController
-@RequestMapping("api/estoque")
+@RequestMapping("/estoque")
 public class EstoqueController {
 	
 	@Autowired

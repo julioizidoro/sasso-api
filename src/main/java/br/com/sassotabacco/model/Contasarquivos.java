@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 /**
  *
  * @author julio.silva
@@ -30,6 +32,7 @@ public class Contasarquivos implements Serializable {
     private String nomeorigial;
     @Column(name = "uri")
     private String uri;
+    @JsonBackReference
     @JoinColumn(name = "contas_idcontas", referencedColumnName = "idcontas")
     @ManyToOne
     private Contas contas;

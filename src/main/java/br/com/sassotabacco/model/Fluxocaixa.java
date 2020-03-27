@@ -11,9 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,12 +44,11 @@ public class Fluxocaixa implements Serializable{
     private Float entradasprevistas;
 	@Column(name = "saidasprevistas")
     private Float saidasprevistas;
-	@JoinColumn(name = "conta_idconta", referencedColumnName = "idconta")
-    @OneToOne(optional = false)
-    private Conta conta;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "fluxocaixa")
     private List<Fluxocontas> fluxocontasList;
-	@Transient
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fluxocaixa")
+    private List<Fluxolancamento> fluxolancamentoList;
+    @Transient
     private Float saldoanterior;
     @Transient
     private Float saldoatual;
@@ -117,6 +114,14 @@ public class Fluxocaixa implements Serializable{
 		this.fluxocontasList = fluxocontasList;
 	}
 
+	public List<Fluxolancamento> getFluxolancamentoList() {
+		return fluxolancamentoList;
+	}
+
+	public void setFluxolancamentoList(List<Fluxolancamento> fluxolancamentoList) {
+		this.fluxolancamentoList = fluxolancamentoList;
+	}
+
 	public Float getSaldoanterior() {
 		return saldoanterior;
 	}
@@ -131,15 +136,6 @@ public class Fluxocaixa implements Serializable{
 
 	public void setSaldoatual(Float saldoatual) {
 		this.saldoatual = saldoatual;
-	}
-
-
-	public Conta getConta() {
-		return conta;
-	}
-
-	public void setConta(Conta conta) {
-		this.conta = conta;
 	}
 
 	@Override

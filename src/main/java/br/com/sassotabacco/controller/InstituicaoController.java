@@ -23,7 +23,7 @@ import br.com.sassotabacco.repository.InstituicaoRepository;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/instituicao")
+@RequestMapping("/instituicao")
 public class InstituicaoController {
 	
 	@Autowired

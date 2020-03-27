@@ -1,6 +1,5 @@
 package br.com.sassotabacco.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -23,7 +22,7 @@ import br.com.sassotabacco.repository.FluxoCaixaRepository;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/contas")
+@RequestMapping("/contas")
 public class ContaController {
 	
 	@Autowired
@@ -50,7 +49,7 @@ public class ContaController {
 		}
 		for (int i=0;i<lista.size();i++) {
 			float saldo = 0;//fluxoCaixaRepository.calculaSaldo(new Date(), lista.get(i).getIdconta());
-			lista.get(i).setSaldoatual(saldo);
+		//	lista.get(i).setSaldoatual(saldo);
 		}
 		
 		return ResponseEntity.ok(lista);
