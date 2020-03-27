@@ -1,4 +1,4 @@
-package br.com.ac7vm.controller;
+package br.com.sassotabacco.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ac7vm.model.Fluxocaixa;
-import br.com.ac7vm.model.Fluxolancamento;
-import br.com.ac7vm.repository.FluxoCaixaRepository;
-import br.com.ac7vm.repository.FluxoLancamentoRepository;
+import br.com.sassotabacco.model.Fluxocaixa;
+import br.com.sassotabacco.model.Fluxolancamento;
+import br.com.sassotabacco.repository.FluxoCaixaRepository;
+import br.com.sassotabacco.repository.FluxoLancamentoRepository;
 
 @CrossOrigin
 @RestController	

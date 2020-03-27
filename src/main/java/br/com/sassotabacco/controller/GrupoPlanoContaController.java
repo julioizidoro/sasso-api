@@ -1,4 +1,4 @@
-package br.com.ac7vm.controller;
+package br.com.sassotabacco.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.ac7vm.model.Grupoplanoconta;
-import br.com.ac7vm.repository.GrupoPlanoContaRepository;
+import br.com.sassotabacco.model.Grupoplanoconta;
+import br.com.sassotabacco.repository.GrupoPlanoContaRepository;
 
 @CrossOrigin("*")
 @RestController
