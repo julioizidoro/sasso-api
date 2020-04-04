@@ -1,10 +1,12 @@
 package br.com.sassotabacco.repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import br.com.sassotabacco.model.Contasaldo;
 
@@ -19,6 +21,10 @@ public interface ContaSaldoRepository extends JpaRepository<Contasaldo, Integer>
 	
 	@Query("Select c from Contasaldo c where c.mesano = :mesano and c.conta.idconta = :idconta")
 	Contasaldo findByConta(int idconta, String mesano);
+	
+	@Query("Select c from Contasaldo c where c.aberto=true")
+	List<Contasaldo> findByAtivos();
+	
 	
 	
 

@@ -34,6 +34,8 @@ public class Contasaldo implements Serializable {
 	private float saldoliquido;
 	@Column(name = "saldo")
 	private float saldo;
+	@Column(name = "aberto")
+	private boolean aberto;
 	@JoinColumn(name = "conta_idconta", referencedColumnName = "idconta")
     @OneToOne(optional = false)
     private Conta conta;
@@ -105,6 +107,14 @@ public class Contasaldo implements Serializable {
 
 	public void setConta(Conta conta) {
 		this.conta = conta;
+	}
+
+	public boolean isAberto() {
+		return aberto;
+	}
+
+	public void setAberto(boolean aberto) {
+		this.aberto = aberto;
 	}
 
 	@Override

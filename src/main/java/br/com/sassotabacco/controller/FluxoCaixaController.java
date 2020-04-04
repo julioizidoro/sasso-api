@@ -45,8 +45,15 @@ public class FluxoCaixaController {
 	@Cacheable("consultaFluxoCaixa")
 	public ResponseEntity<List<Fluxocaixa>> listarInicial() {
 		Conversor c = new Conversor();
-		Date datainicial = c.SomarDiasData(new Date(), -1);
-		List<Fluxocaixa> lista = fluxoCaixaRepository.findAllFluxoCaixaInicial(datainicial);
+		String data = c.ConvercaoDataPadrao(new Date());
+		String mesano = data.substring(6,10) + "-" + data.substring(3,5);
+		String mes = data.substring(3,5);
+		String iData =  mesano + "-01";
+		Date dataInicial = c.ConvercaoStringData(iData);
+		String fData =  mesano + "-" + String.valueOf(c.getRestoMes(Integer.parseInt(mes)));
+		Date dataFinal = c.ConvercaoStringData(fData);
+		String consulta = "Select * from fluxocaixa f where f.data>= :datainicial and f.data<= :datafinal order by f.data";
+		List<Fluxocaixa> lista = fluxoCaixaRepository.findAllFluxoCaixaInicial(dataInicial, dataFinal);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}

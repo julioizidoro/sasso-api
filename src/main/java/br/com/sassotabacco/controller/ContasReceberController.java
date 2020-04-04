@@ -167,7 +167,7 @@ public class ContasReceberController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Contas salvar(@Valid @RequestBody Contas conta) {
 		conta = contasRepository.save(conta);
-		Fluxocaixa fluxoCaixa = fluxoCaixaRepository.findFluxoCaixa(conta.getDatavencimento());
+		Fluxocaixa fluxoCaixa = fluxoCaixaRepository.findFluxoCaixa(conta.getDatavencimento(), conta.getConta().getIdconta());
 		if (fluxoCaixa == null) {
 			fluxoCaixa = new Fluxocaixa();
 			fluxoCaixa.setData(conta.getDatavencimento());
@@ -175,6 +175,7 @@ public class ContasReceberController {
 			fluxoCaixa.setEntradasprevistas(0.0f);
 			fluxoCaixa.setSaidas(0.0f);
 			fluxoCaixa.setSaidasprevistas(0.0f);
+			fluxoCaixa.setConta(conta.getConta());
 		}
 		fluxoCaixa.setEntradasprevistas(fluxoCaixa.getEntradasprevistas() + conta.getValorparcela());
 		fluxoCaixa = fluxoCaixaRepository.save(fluxoCaixa);
@@ -191,7 +192,7 @@ public class ContasReceberController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Contas baixar(@Valid @RequestBody Contas conta) {
 		conta = contasRepository.save(conta);
-		Fluxocaixa fluxoCaixa = fluxoCaixaRepository.findFluxoCaixa(conta.getDatapagamento());
+		Fluxocaixa fluxoCaixa = fluxoCaixaRepository.findFluxoCaixa(conta.getDatapagamento(), conta.getConta().getIdconta());
 		boolean novoFluxo = false;
 		if (fluxoCaixa == null) {
 			fluxoCaixa = new Fluxocaixa();
@@ -200,6 +201,7 @@ public class ContasReceberController {
 			fluxoCaixa.setEntradasprevistas(0.0f);
 			fluxoCaixa.setSaidas(0.0f);
 			fluxoCaixa.setSaidasprevistas(0.0f);
+			fluxoCaixa.setConta(conta.getConta());
 			novoFluxo = true;
 		}
 		fluxoCaixa.setEntradas(fluxoCaixa.getEntradas() + conta.getValorpago());

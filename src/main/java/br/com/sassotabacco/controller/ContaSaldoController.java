@@ -72,5 +72,41 @@ public class ContaSaldoController {
 		}
 		return ResponseEntity.ok(contaSaldo);
 	}
-
+	
+	@GetMapping("/ativos")
+	public ResponseEntity<List<Contasaldo>> getAtivos() {
+		List<Contasaldo> listaContaSaldo = contaSaldoRepository.findByAtivos();
+		if (listaContaSaldo==null) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(listaContaSaldo);
+	}
+	
+	@PostMapping("/gerarsaldo")
+	@ResponseStatus(HttpStatus.CREATED)
+	public String iniciarMes(@Valid @RequestBody Contasaldo contaSaldo) {
+		List<Contasaldo> listaAbertos = contaSaldoRepository.findByAtivos();
+		try {
+			if (listaAbertos != null) {
+				
+				for (Contasaldo aberto : listaAbertos) {
+					Contasaldo nova = new Contasaldo();
+					nova.setConta(aberto.getConta());
+					nova.setEntradas(0.0f);
+					nova.setMesano(contaSaldo.getMesano());
+					nova.setSaidas(0.0f);
+					nova.setSaldoinicial(aberto.getSaldo());
+					nova.setSaldo(aberto.getSaldo());
+					nova.setAberto(true);
+					contaSaldoRepository.save(nova);
+					aberto.setAberto(false);
+					contaSaldoRepository.save(aberto);
+				}
+				return "Saldo gerado com sucesso.";
+			}
+		} catch (Exception e) {
+			return "Erro ao gerar saldos " + e.getMessage();
+		}
+		return "Sem contas para gerar saldo.";
+	}
 }
