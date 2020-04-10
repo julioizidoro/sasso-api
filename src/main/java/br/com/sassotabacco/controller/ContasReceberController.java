@@ -23,10 +23,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.com.sassotabacco.model.Conta;
 import br.com.sassotabacco.model.Contas;
 import br.com.sassotabacco.model.Contasaldo;
 import br.com.sassotabacco.model.Fluxocaixa;
 import br.com.sassotabacco.model.Fluxocontas;
+import br.com.sassotabacco.repository.ContaRepository;
 import br.com.sassotabacco.repository.ContaSaldoRepository;
 import br.com.sassotabacco.repository.ContasRepository;
 import br.com.sassotabacco.repository.FluxoCaixaRepository;
@@ -49,6 +51,8 @@ public class ContasReceberController {
 	private S3Service s3Service;
 	@Autowired
 	private ContaSaldoRepository contaSaldoRepository;
+	@Autowired
+	private ContaRepository contaRepository;
 	
 	//Consulta por ID
 	@GetMapping("id/{id}")
@@ -166,6 +170,10 @@ public class ContasReceberController {
 	@CachePut("consultaContasReceber")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Contas salvar(@Valid @RequestBody Contas conta) {
+		if (conta.getConta()== null) {
+			Conta contaBanco = contaRepository.findById(7);
+			conta.setConta(contaBanco);
+		}
 		conta = contasRepository.save(conta);
 		Fluxocaixa fluxoCaixa = fluxoCaixaRepository.findFluxoCaixa(conta.getDatavencimento(), conta.getConta().getIdconta());
 		if (fluxoCaixa == null) {
@@ -192,7 +200,7 @@ public class ContasReceberController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Contas baixar(@Valid @RequestBody Contas conta) {
 		conta = contasRepository.save(conta);
-		Fluxocaixa fluxoCaixa = fluxoCaixaRepository.findFluxoCaixa(conta.getDatapagamento(), conta.getConta().getIdconta());
+		Fluxocaixa fluxoCaixa = fluxoCaixaRepository.findFluxoCaixa(conta.getDatapagamento(), 7);
 		boolean novoFluxo = false;
 		if (fluxoCaixa == null) {
 			fluxoCaixa = new Fluxocaixa();

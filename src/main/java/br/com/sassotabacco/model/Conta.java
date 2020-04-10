@@ -27,6 +27,8 @@ public class Conta implements Serializable {
 	private String descricao;
 	@Column(name = "logo")
 	private String logo;
+	@Column(name = "mostrar")
+	private boolean mostrar;
 	
 
 	public Conta() {
@@ -61,6 +63,18 @@ public class Conta implements Serializable {
 
 	public void setLogo(String logo) {
 		this.logo = logo;
+	}
+
+
+
+	public boolean isMostrar() {
+		return mostrar;
+	}
+
+
+
+	public void setMostrar(boolean mostrar) {
+		this.mostrar = mostrar;
 	}
 
 
