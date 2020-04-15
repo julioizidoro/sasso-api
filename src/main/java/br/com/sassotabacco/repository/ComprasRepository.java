@@ -16,7 +16,7 @@ public interface ComprasRepository extends JpaRepository<Compras, Integer>{
 	
 	Optional<Compras> findById(int id);
 	@Query("Select c from Compras c where c.instituicao.nome like CONCAT('%', :nome, '%') and "
-			+ " c.datacompra<= :data90 order by c.datacompra ")
+			+ " c.datacompra>= :data90 order by c.datacompra ")
 	List<Compras> findAll(@Param("nome") String nome, @Param("data90") Date data90);
 	
 	

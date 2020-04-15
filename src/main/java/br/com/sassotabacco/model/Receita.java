@@ -25,18 +25,15 @@ public class Receita implements Serializable {
     @Basic(optional = false)
     @Column(name = "idreceita")
     private Integer idreceita;
+    @Column(name = "descricao")
+    private String descricao;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "quantidade")
     private Float quantidade;
-    @Column(name = "unidade")
-    private String unidade;
     @JoinColumn(name = "estoque_idestoque", referencedColumnName = "idestoque")
     @ManyToOne(optional = false)
     private Estoque estoque;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receita")
-    private List<Producao> producaoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "receita")
-    private List<Receitaproduto> receitaprodutoList;
+  
 
     public Receita() {
     }
@@ -53,20 +50,22 @@ public class Receita implements Serializable {
         this.idreceita = idreceita;
     }
 
-    public Float getQuantidade() {
+   
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public Float getQuantidade() {
         return quantidade;
     }
 
     public void setQuantidade(Float quantidade) {
         this.quantidade = quantidade;
-    }
-
-    public String getUnidade() {
-        return unidade;
-    }
-
-    public void setUnidade(String unidade) {
-        this.unidade = unidade;
     }
 
     public Estoque getEstoque() {
@@ -75,22 +74,6 @@ public class Receita implements Serializable {
 
     public void setEstoque(Estoque estoque) {
         this.estoque = estoque;
-    }
-
-    public List<Producao> getProducaoList() {
-        return producaoList;
-    }
-
-    public void setProducaoList(List<Producao> producaoList) {
-        this.producaoList = producaoList;
-    }
-
-    public List<Receitaproduto> getReceitaprodutoList() {
-        return receitaprodutoList;
-    }
-
-    public void setReceitaprodutoList(List<Receitaproduto> receitaprodutoList) {
-        this.receitaprodutoList = receitaprodutoList;
     }
 
     @Override

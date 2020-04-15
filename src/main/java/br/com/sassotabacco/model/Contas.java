@@ -66,9 +66,7 @@ public class Contas implements Serializable{
     @JoinColumn(name = "instituicao_idinstituicao", referencedColumnName = "idinstituicao")
     @OneToOne(optional = false)
     private Instituicao instituicao;
-    @JoinColumn(name = "formapagamento_idformapagamento", referencedColumnName = "idformapagamento")
-    @OneToOne(optional = false)
-    private Formapagamento formapagamento;
+   
     
     @JoinColumn(name = "conta_idconta", referencedColumnName = "idconta")
     @OneToOne(optional = false)
@@ -266,19 +264,6 @@ public class Contas implements Serializable{
 	public void setInstituicao(Instituicao instituicao) {
 		this.instituicao = instituicao;
 	}
-
-
-
-	public Formapagamento getFormapagamento() {
-		return formapagamento;
-	}
-
-
-
-	public void setFormapagamento(Formapagamento formapagamento) {
-		this.formapagamento = formapagamento;
-	}
-
 
 
 	public String getCodigobarras() {

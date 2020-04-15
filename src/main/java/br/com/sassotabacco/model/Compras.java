@@ -60,16 +60,13 @@ public class Compras implements Serializable {
     @JoinColumn(name = "instituicao_idinstituicao", referencedColumnName = "idinstituicao")
     @ManyToOne(optional = false)
     private Instituicao instituicao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compras")
-    private List<Comprasconta> comprascontaList;
     @JoinColumn(name = "planoconta_idplanoconta", referencedColumnName = "idplanoconta")
     @ManyToOne(optional = false)
     private Planoconta planoconta;
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "compras")
-    private List<Comprasproduto> comprasprodutoList;
+   
     
 
     public Compras() {
@@ -151,14 +148,6 @@ public class Compras implements Serializable {
         this.observacao = observacao;
     }
 
-    public List<Comprasconta> getComprascontaList() {
-        return comprascontaList;
-    }
-
-    public void setComprascontaList(List<Comprasconta> comprascontaList) {
-        this.comprascontaList = comprascontaList;
-    }
-
     public Planoconta getPlanoconta() {
         return planoconta;
     }
@@ -173,14 +162,6 @@ public class Compras implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public List<Comprasproduto> getComprasprodutoList() {
-        return comprasprodutoList;
-    }
-
-    public void setComprasprodutoList(List<Comprasproduto> comprasprodutoList) {
-        this.comprasprodutoList = comprasprodutoList;
     }
 
     public Instituicao getInstituicao() {

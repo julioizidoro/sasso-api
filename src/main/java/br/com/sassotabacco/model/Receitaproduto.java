@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,17 +19,19 @@ public class Receitaproduto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idreceitaproduto")
     private Integer idreceitaproduto;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "quantidade")
     private Float quantidade;
-    @Column(name = "unidade")
-    private String unidade;
     @JoinColumn(name = "receita_idreceita", referencedColumnName = "idreceita")
     @ManyToOne(optional = false)
     private Receita receita;
+    @JoinColumn(name = "estoque_idestoque", referencedColumnName = "idestoque")
+    @ManyToOne(optional = false)
+    private Estoque estoque;
 
     public Receitaproduto() {
     }
@@ -52,14 +56,6 @@ public class Receitaproduto implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public String getUnidade() {
-        return unidade;
-    }
-
-    public void setUnidade(String unidade) {
-        this.unidade = unidade;
-    }
-
     public Receita getReceita() {
         return receita;
     }
@@ -68,7 +64,15 @@ public class Receitaproduto implements Serializable {
         this.receita = receita;
     }
 
-    @Override
+    public Estoque getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(Estoque estoque) {
+		this.estoque = estoque;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idreceitaproduto != null ? idreceitaproduto.hashCode() : 0);

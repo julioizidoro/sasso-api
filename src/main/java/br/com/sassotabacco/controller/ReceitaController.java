@@ -37,13 +37,16 @@ public class ReceitaController {
 	@PostMapping("/salvar/receita")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Receita salvarReceita(@Valid @RequestBody Receita receita) {
+		System.out.println("Salvou");
 		return receitaRepository.save(receita);
 	}
 	
 	@PostMapping("/salvar/produto")
 	@ResponseStatus(HttpStatus.CREATED)
-	public Receitaproduto salvarProduto(@Valid @RequestBody Receitaproduto receitaProduto)  {
-		return receitaProdutoRepository.save(receitaProduto);
+	public void salvarProduto(@Valid @RequestBody List<Receitaproduto> listaReceitaProduto)  {
+		for (int i=0;i<listaReceitaProduto.size();i++) {
+			receitaProdutoRepository.save(listaReceitaProduto.get(i));
+		}
 	}
 	
 	@GetMapping("/receita/{id}")
@@ -57,16 +60,30 @@ public class ReceitaController {
 		return ResponseEntity.ok(receita.get());
 	}
 	
-	@DeleteMapping("/produto/delete/{id}")
+	@GetMapping("/produto/delete/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<String> removerProduto(@Valid @RequestBody Receitaproduto receitaProduto) {
+	public ResponseEntity<String> removerProduto(@PathVariable int id) {
+		Receitaproduto receitaProduto = receitaProdutoRepository.findById(id).get();
 		receitaProdutoRepository.delete(receitaProduto);
 		return ResponseEntity.ok("OK");
 	}
 	
-	@GetMapping("/receita/listar")
-	public ResponseEntity<List<Receita>> listarReceita() {
-		List<Receita> lista = receitaRepository.findAll();
+	@GetMapping("/receita/listar/{descricao}")
+	public ResponseEntity<List<Receita>> listarReceita(@PathVariable String descricao) {
+		if (descricao.equalsIgnoreCase("@")) {
+			descricao = " ";
+		}
+		List<Receita> lista = receitaRepository.findByDescricao(descricao);
+		if (lista==null) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.ok(lista);
+	}
+	
+	@GetMapping("/produto/listar/{id}")
+	public ResponseEntity<List<Receitaproduto>> listarReceitaProduto(@PathVariable int id) {
+		List<Receitaproduto> lista = receitaRepository.findByReceitaProduto(id);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}

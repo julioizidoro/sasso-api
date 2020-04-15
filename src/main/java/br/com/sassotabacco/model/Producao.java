@@ -29,8 +29,8 @@ public class Producao implements Serializable {
     @Column(name = "idproducao")
     private Integer idproducao;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "quantidae")
-    private Float quantidae;
+    @Column(name = "quantidade")
+    private Float quantidade;
     @Column(name = "custo")
     private Float custo;
     @Column(name = "data")
@@ -38,8 +38,6 @@ public class Producao implements Serializable {
     private Date data;
     @Column(name = "situacao")
     private String situacao;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producao")
-    private List<Producaoproduto> producaoprodutoList;
     @JoinColumn(name = "planoconta_idplanoconta", referencedColumnName = "idplanoconta")
     @ManyToOne(optional = false)
     private Planoconta planoconta;
@@ -65,15 +63,17 @@ public class Producao implements Serializable {
         this.idproducao = idproducao;
     }
 
-    public Float getQuantidae() {
-        return quantidae;
-    }
+    
 
-    public void setQuantidae(Float quantidae) {
-        this.quantidae = quantidae;
-    }
+    public Float getQuantidade() {
+		return quantidade;
+	}
 
-    public Float getCusto() {
+	public void setQuantidade(Float quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public Float getCusto() {
         return custo;
     }
 
@@ -95,14 +95,6 @@ public class Producao implements Serializable {
 
     public void setSituacao(String situacao) {
         this.situacao = situacao;
-    }
-
-    public List<Producaoproduto> getProducaoprodutoList() {
-        return producaoprodutoList;
-    }
-
-    public void setProducaoprodutoList(List<Producaoproduto> producaoprodutoList) {
-        this.producaoprodutoList = producaoprodutoList;
     }
 
     public Planoconta getPlanoconta() {

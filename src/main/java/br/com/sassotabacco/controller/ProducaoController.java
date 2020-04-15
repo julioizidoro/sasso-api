@@ -1,6 +1,7 @@
 package br.com.sassotabacco.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.sassotabacco.model.Estoque;
 import br.com.sassotabacco.model.Producao;
 import br.com.sassotabacco.model.Producaoproduto;
+import br.com.sassotabacco.repository.EstoqueRepository;
 import br.com.sassotabacco.repository.ProducaoProdutoRepository;
 import br.com.sassotabacco.repository.ProducaoRepository;
+import br.com.sassotabacco.util.Conversor;
 
 @CrossOrigin
 @RestController
@@ -33,6 +37,9 @@ public class ProducaoController {
 	
 	@Autowired
 	private ProducaoProdutoRepository producaoProdutoRepository;
+	
+	@Autowired
+	private EstoqueRepository estoqueRepository;
 	
 	@PostMapping("/salvar/producao")
 	@ResponseStatus(HttpStatus.CREATED)
@@ -46,6 +53,10 @@ public class ProducaoController {
 		List<Producaoproduto> listaSalva = new ArrayList<Producaoproduto>();
 		for (Producaoproduto pp : listaProducaoProduto) {
 			pp = producaoProdutoRepository.save(pp);
+		    Estoque estoque = pp.getEstoque();
+		    estoque.setQuantidadeestoque(estoque.getQuantidadeestoque() - pp.getQuantidade());;
+		    estoqueRepository.save(estoque);
+		    pp.setEstoque(estoque);
 			listaSalva.add(pp);
 		}
 		return listaSalva;
@@ -62,13 +73,27 @@ public class ProducaoController {
 		return ResponseEntity.ok(producao.get());
 	}
 	
-	@GetMapping("/producao/listar")
-	public ResponseEntity<List<Producao>> listarReceita() {
-		List<Producao> lista = producaoRepository.findAll();
+	@GetMapping("/producao/listar/{descricao}")
+	public ResponseEntity<List<Producao>> listarProducao(@PathVariable String descricao) {
+		Conversor c = new Conversor();
+		Date data = c.SomarDiasData(new Date(), -90);
+		if (descricao.equalsIgnoreCase("@")) {
+			descricao = " ";
+		}
+		List<Producao> lista = producaoRepository.findByDescricao(descricao, data);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
 		
+		return ResponseEntity.ok(lista);
+	}
+	
+	@GetMapping("/produto/listar/{id}")
+	public ResponseEntity<List<Producaoproduto>> listarProducaoProduto(@PathVariable int id) {
+		List<Producaoproduto> lista = producaoRepository.findByProducaoProduto(id);
+		if (lista==null) {
+			return ResponseEntity.notFound().build();
+		}
 		return ResponseEntity.ok(lista);
 	}
 	

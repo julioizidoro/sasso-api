@@ -30,6 +30,9 @@ public class Producaoproduto implements Serializable {
     @JoinColumn(name = "producao_idproducao", referencedColumnName = "idproducao")
     @ManyToOne(optional = false)
     private Producao producao;
+    @JoinColumn(name = "estoque_idestoque", referencedColumnName = "idestoque")
+    @ManyToOne(optional = false)
+    private Estoque estoque;
 
     public Producaoproduto() {
     }
@@ -70,7 +73,15 @@ public class Producaoproduto implements Serializable {
         this.producao = producao;
     }
 
-    @Override
+    public Estoque getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(Estoque estoque) {
+		this.estoque = estoque;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idproducaoproduto != null ? idproducaoproduto.hashCode() : 0);

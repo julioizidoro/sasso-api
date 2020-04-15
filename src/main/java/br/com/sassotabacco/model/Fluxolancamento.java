@@ -40,9 +40,6 @@ public class Fluxolancamento implements Serializable {
 	@JoinColumn(name = "planoconta_idplanoconta", referencedColumnName = "idplanoconta")
     @OneToOne(optional = false)
     private Planoconta planoconta;
-	@JoinColumn(name = "formapagamento_idformapagamento", referencedColumnName = "idformapagamento")
-    @OneToOne(optional = false)
-    private Formapagamento formapagamento;
 	@JsonBackReference
     @JoinColumn(name = "fluxocaixa_idfluxocaixa", referencedColumnName = "idfluxocaixa")
     @OneToOne(optional = false)
@@ -93,14 +90,6 @@ public class Fluxolancamento implements Serializable {
 
 	public void setPlanoconta(Planoconta planoconta) {
 		this.planoconta = planoconta;
-	}
-
-	public Formapagamento getFormapagamento() {
-		return formapagamento;
-	}
-
-	public void setFormapagamento(Formapagamento formapagamento) {
-		this.formapagamento = formapagamento;
 	}
 
 	public Fluxocaixa getFluxocaixa() {
