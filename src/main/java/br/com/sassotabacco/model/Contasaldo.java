@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -39,6 +40,9 @@ public class Contasaldo implements Serializable {
 	@JoinColumn(name = "conta_idconta", referencedColumnName = "idconta")
     @OneToOne(optional = false)
     private Conta conta;
+	@JoinColumn(name = "empresa_idempresa", referencedColumnName = "idempresa")
+    @ManyToOne(optional = false)
+    private Empresa empresa;
 	
 
 	public Contasaldo() {
@@ -115,6 +119,14 @@ public class Contasaldo implements Serializable {
 
 	public void setAberto(boolean aberto) {
 		this.aberto = aberto;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	@Override

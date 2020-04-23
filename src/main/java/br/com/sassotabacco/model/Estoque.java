@@ -39,8 +39,11 @@ import javax.persistence.Table;
     @Column(name = "valorvenda")
     private Float valorvenda;
     @JoinColumn(name = "produto_idproduto", referencedColumnName = "idproduto")
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Produto produto;
+    @JoinColumn(name = "empresa_idempresa", referencedColumnName = "idempresa")
+    @ManyToOne(optional = false)
+    private Empresa empresa;
 
     public Estoque() {
     }
@@ -88,6 +91,14 @@ import javax.persistence.Table;
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 	@Override

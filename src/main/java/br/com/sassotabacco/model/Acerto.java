@@ -39,6 +39,9 @@ public class Acerto implements Serializable {
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
+    @JoinColumn(name = "empresa_idempresa", referencedColumnName = "idempresa")
+    @ManyToOne(optional = false)
+    private Empresa empresa;
    
 
     public Acerto() {
@@ -96,7 +99,15 @@ public class Acerto implements Serializable {
         this.usuario = usuario;
     }
 
-    @Override
+    public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idacerto != null ? idacerto.hashCode() : 0);

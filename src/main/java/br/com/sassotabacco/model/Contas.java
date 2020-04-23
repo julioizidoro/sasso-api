@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -78,6 +79,9 @@ public class Contas implements Serializable{
     
     @OneToMany(mappedBy = "contas")
     private List<Contasarquivos> contasarquivosList;
+    @JoinColumn(name = "empresa_idempresa", referencedColumnName = "idempresa")
+    @ManyToOne(optional = false)
+    private Empresa empresa;
 
 	public List<Contasarquivos> getContasarquivosList() {
 		return contasarquivosList;
@@ -286,6 +290,18 @@ public class Contas implements Serializable{
 
 	public void setConta(Conta conta) {
 		this.conta = conta;
+	}
+
+
+
+	public Empresa getEmpresa() {
+		return empresa;
+	}
+
+
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
 	}
 
 

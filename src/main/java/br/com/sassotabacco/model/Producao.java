@@ -47,6 +47,9 @@ public class Producao implements Serializable {
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuario;
+    @JoinColumn(name = "empresa_idempresa", referencedColumnName = "idempresa")
+    @ManyToOne(optional = false)
+    private Empresa empresa;
 
     public Producao() {
     }
@@ -121,7 +124,15 @@ public class Producao implements Serializable {
         this.usuario = usuario;
     }
 
-    @Override
+    public Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(Empresa empresa) {
+		this.empresa = empresa;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (idproducao != null ? idproducao.hashCode() : 0);
