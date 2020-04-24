@@ -95,32 +95,32 @@ public class ComprasController {
 	}
 	
 	
-	@GetMapping("listar/{nome}")
-	public ResponseEntity<List<Compras>> listar(@PathVariable("nome") String nome) {
+	@GetMapping("listar/{nome}/{idempresa}")
+	public ResponseEntity<List<Compras>> listar(@PathVariable("nome") String nome, @PathVariable Integer idempresa) {
 		if (nome.equalsIgnoreCase("@")) {
 			nome = " ";
 		}
 		Conversor c = new Conversor();
 		Date data90 = c.SomarDiasData(new Date(), -90);
-		List<Compras> lista = comprasRepository.findAll(nome, data90);
+		List<Compras> lista = comprasRepository.findAll(nome, data90, idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(lista);
 	}
 	
-	@GetMapping("listar/doc/{documento}")
-	public ResponseEntity<List<Compras>> listarDocumento(@PathVariable("documento") String documento) {
-		List<Compras> lista = comprasRepository.findDocumento(documento);
+	@GetMapping("listar/doc/{documento}/{idempresa}")
+	public ResponseEntity<List<Compras>> listarDocumento(@PathVariable("documento") String documento, @PathVariable Integer idempresa) {
+		List<Compras> lista = comprasRepository.findDocumento(documento, idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(lista);
 	}
 	
-	@GetMapping("listar/nome/{nome}")
-	public ResponseEntity<List<Compras>> listarNome(@PathVariable("nome") String nome) {
-		List<Compras> lista = comprasRepository.findNome(nome);
+	@GetMapping("listar/nome/{nome}/{idempresa}")
+	public ResponseEntity<List<Compras>> listarNome(@PathVariable("nome") String nome, @PathVariable Integer idempresa) {
+		List<Compras> lista = comprasRepository.findNome(nome, idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}

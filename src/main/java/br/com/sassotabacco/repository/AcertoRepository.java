@@ -15,7 +15,7 @@ public interface AcertoRepository extends JpaRepository<Acerto, Integer>{
 	Optional<Acerto> findById(int id);
 	
 	//Listar Data
-	@Query("Select a from Acerto a where a.data>= :data order by a.data ")
-	List<Acerto> findByData(@Param("data") Date data);
+	@Query("Select a from Acerto a where a.data>= :data  and a.empresa.idempresa= :idempresa order by a.data ")
+	List<Acerto> findByData(@Param("data") Date data, @Param("idempresa") int idempresa);
 	
 }

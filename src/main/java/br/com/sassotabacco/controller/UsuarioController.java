@@ -1,5 +1,6 @@
 package br.com.sassotabacco.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.sassotabacco.model.Empresa;
 import br.com.sassotabacco.model.Usuario;
+import br.com.sassotabacco.model.Usuarioempresa;
+import br.com.sassotabacco.repository.UsuarioEmpresaRepository;
 import br.com.sassotabacco.repository.UsuarioRepository;
 import br.com.sassotabacco.util.Criptografia;
 
@@ -28,6 +32,8 @@ public class UsuarioController {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	@Autowired
+	private UsuarioEmpresaRepository usuarioEmpresaRepository;
 	
 	@GetMapping("buscar/{situacao}")
 	public ResponseEntity<Optional<List<Usuario>>> buscarSituacao(@PathVariable("situacao") boolean situacao) {
@@ -67,7 +73,14 @@ public class UsuarioController {
 		if (usuario==null) {
 			return ResponseEntity.notFound().build();
 		}
-		
+		List<Usuarioempresa> lista = usuarioEmpresaRepository.findByUsuario(usuario.get().getIdusuario());
+		if (lista!=null) {
+			List<Empresa> listaEmpresa = new ArrayList<Empresa>();
+ 			for(Usuarioempresa ue : lista) {
+ 				listaEmpresa.add(ue.getEmpresa());
+			}
+ 			usuario.get().setListaempresa(listaEmpresa);
+		}
 		return ResponseEntity.ok(usuario);
 	}
 	

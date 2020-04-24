@@ -15,7 +15,7 @@ public interface DevolucaoRepository extends JpaRepository<Devolucao, Integer>{
 	Optional<Devolucao> findById(int id);
 	
 	//Listar Data
-	@Query("Select d from Devolucao d where d.data>= :data order by d.data ")
-	List<Devolucao> findByData(@Param("data") Date data);
+	@Query("Select d from Devolucao d where d.data>= :data  and d.empresa.idempresa= :idempresa order by d.data ")
+	List<Devolucao> findByData(@Param("data") Date data, @Param("idempresa") int idempresa);
 	
 }

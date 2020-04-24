@@ -47,30 +47,30 @@ public class EstoqueController {
 		return ResponseEntity.ok(estoque.get());
 	}
 	
-	@GetMapping("/produto/id/{id}")
-	public ResponseEntity<Estoque> findProdutoById(@PathVariable Integer id) {
-		Optional<Estoque> estoque = estoqueRepository.findProdutoId(id);
+	@GetMapping("/produto/id/{id}/{idempresa}")
+	public ResponseEntity<Estoque> findProdutoById(@PathVariable Integer id, @PathVariable int idempresa) {
+		Optional<Estoque> estoque = estoqueRepository.findProdutoId(id, idempresa);
 		if (estoque==null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(estoque.get());
 	}
 	
-	@GetMapping("listar/produto/descricao/{descricao}")
-	public ResponseEntity<Optional<List<Estoque>>> listarProdutoDescricao(@PathVariable("descricao") String descricao) {
+	@GetMapping("listar/produto/descricao/{descricao}/{idempresa}")
+	public ResponseEntity<Optional<List<Estoque>>> listarProdutoDescricao(@PathVariable("descricao") String descricao, @PathVariable int idempresa) {
 		if (descricao.equalsIgnoreCase("@")) {
 			descricao = "";
 		}
-		Optional<List<Estoque>> lista = estoqueRepository.findProdutoDescricao(descricao);
+		Optional<List<Estoque>> lista = estoqueRepository.findProdutoDescricao(descricao, idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(lista);
 	}
 	
-	@GetMapping("listar/produto/cb/{cb}")
-	public ResponseEntity<Optional<List<Estoque>>> listarProdutoCodigoBarras(@PathVariable("cb") String cb) {
-		Optional<List<Estoque>> lista = estoqueRepository.findProdutoCodigoBarras(cb);
+	@GetMapping("listar/produto/cb/{cb}/{idempresa}")
+	public ResponseEntity<Optional<List<Estoque>>> listarProdutoCodigoBarras(@PathVariable("cb") String cb, @PathVariable int idempresa) {
+		Optional<List<Estoque>> lista = estoqueRepository.findProdutoCodigoBarras(cb, idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}

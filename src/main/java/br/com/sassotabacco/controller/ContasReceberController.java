@@ -65,12 +65,12 @@ public class ContasReceberController {
 	}
 	
 	//Consulta Inicial
-	@GetMapping
-	@Cacheable("consultaContasReceber")
-	public ResponseEntity<Optional<List<Contas>>> listarCR() {
+	@GetMapping("/{idempresa}")
+	@Cacheable("consultaContasPagar")
+	public ResponseEntity<Optional<List<Contas>>> listarCR(@PathVariable int idempresa) {
 		Conversor c = new Conversor();
 		Date data = c.SomarDiasData(new Date(), 90);
-		Optional<List<Contas>> lista = contasRepository.findAllContas(data, "r");
+		Optional<List<Contas>> lista = contasRepository.findAllContas(data, "r", idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -78,9 +78,10 @@ public class ContasReceberController {
 	}
 	
 	//Consulta Documento
-	@GetMapping("/doc/{documento}")
-	public ResponseEntity<Optional<List<Contas>>>  findAllContasDocument(@PathVariable("documento") String documento) {
-		Optional<List<Contas>> lista = contasRepository.findAllContasDocumento(documento, "r");
+	@GetMapping("doc/{idempresa}")
+	@Cacheable("consultaContasPagar")
+	public ResponseEntity<Optional<List<Contas>>>  findAllContasDocument(@PathVariable("documento") String documento, @PathVariable int idempresa) {
+		Optional<List<Contas>> lista = contasRepository.findAllContasDocumento(documento, "r", idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -88,12 +89,12 @@ public class ContasReceberController {
 	}
 	
 	//Consulta Nome todas
-	@GetMapping("nometodas/{nome}")
-	public ResponseEntity<Optional<List<Contas>>>  findAllContasNomeTodas(@PathVariable("nome") String nome) {
+	@GetMapping("nometodas/{nome}/{idempresa}")
+	public ResponseEntity<Optional<List<Contas>>>  findAllContasNomeTodas(@PathVariable("nome") String nome, @PathVariable int idempresa) {
 		if (nome.equalsIgnoreCase("@")){
 			nome = "";
 		}
-		Optional<List<Contas>> lista = contasRepository.findAllContasNomeTodas(nome, "r");
+		Optional<List<Contas>> lista = contasRepository.findAllContasNomeTodas(nome, "r", idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -101,12 +102,12 @@ public class ContasReceberController {
 	}
 	
 	//Consulta Nome Pagar
-	@GetMapping("nomepagar/{nome}")
-	public ResponseEntity<Optional<List<Contas>>>  findAllContasNomePagar(@PathVariable("nome") String nome) {
+	@GetMapping("nomepagar/{nome}/{idempresa}")
+	public ResponseEntity<Optional<List<Contas>>>  findAllContasNomePagar(@PathVariable("nome") String nome, @PathVariable int idempresa) {
 		if (nome.equalsIgnoreCase("@")){
 			nome = "";
 		}
-		Optional<List<Contas>> lista = contasRepository.findAllContasNomePagar(nome, "r");
+		Optional<List<Contas>> lista = contasRepository.findAllContasNomePagar(nome, "r", idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -114,12 +115,12 @@ public class ContasReceberController {
 	}
 		
 	//Consulta Nome Pagas
-	@GetMapping("nomepagas/{nome}")
-	public ResponseEntity<Optional<List<Contas>>>  findAllContasNomePagas(@PathVariable("nome") String nome) {
+	@GetMapping("nomepagas/{nome}/{idempresa}")
+	public ResponseEntity<Optional<List<Contas>>>  findAllContasNomePagas(@PathVariable("nome") String nome, @PathVariable int idempresa) {
 		if (nome.equalsIgnoreCase("@")){
 			nome = "";
 		}
-		Optional<List<Contas>> lista = contasRepository.findAllContasNomePagas(nome, "r");
+		Optional<List<Contas>> lista = contasRepository.findAllContasNomePagas(nome, "r", idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -127,12 +128,12 @@ public class ContasReceberController {
 	}
 	
 	//Consulta Data Vencimento todas
-	@GetMapping("dvtodas/{datainicial}/{datafinal}/{nome}")
-	public ResponseEntity<Optional<List<Contas>>>  findAllContasDataVencimentoTodas(@PathVariable("datainicial") Date datainicial, @PathVariable("datafinal") Date datafinal, @PathVariable("nome") String nome) {
+	@GetMapping("dvtodas/{datainicial}/{datafinal}/{nome}/{idempresa}")
+	public ResponseEntity<Optional<List<Contas>>>  findAllContasDataVencimentoTodas(@PathVariable("datainicial") Date datainicial, @PathVariable("datafinal") Date datafinal, @PathVariable("nome") String nome, @PathVariable int idempresa) {
 		if (nome.equalsIgnoreCase("@")){
 			nome = "";
 		}
-		Optional<List<Contas>> lista = contasRepository.findAllContasDataVencimentoTodas(nome, datainicial, datafinal, "r");
+		Optional<List<Contas>> lista = contasRepository.findAllContasDataVencimentoTodas(nome, datainicial, datafinal, "r", idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -140,12 +141,12 @@ public class ContasReceberController {
 	}
 	
 	//Consulta Data Vencimento pagar
-	@GetMapping("dvreeceber/{datainicial}/{datafinal}/{nome}")
-	public ResponseEntity<Optional<List<Contas>>>  findAllContasDataVencimentoPagar(@PathVariable("datainicial") Date datainicial, @PathVariable("datafinal") Date datafinal, @PathVariable("nome") String nome) {
+	@GetMapping("dvpagar/{datainicial}/{datafinal}/{nome}/{idempresa}")
+	public ResponseEntity<Optional<List<Contas>>>  findAllContasDataVencimentoPagar(@PathVariable("datainicial") Date datainicial, @PathVariable("datafinal") Date datafinal, @PathVariable("nome") String nome, @PathVariable int idempresa) {
 		if (nome.equalsIgnoreCase("@")){
 			nome = "";
 		}
-		Optional<List<Contas>> lista = contasRepository.findAllContasDataVencimentoPagar(nome, datainicial, datafinal, "r");
+		Optional<List<Contas>> lista = contasRepository.findAllContasDataVencimentoPagar(nome, datainicial, datafinal, "r", idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -153,17 +154,18 @@ public class ContasReceberController {
 	}
 	
 	//Consulta Data Vencimento pagas
-	@GetMapping("dvrecebidas/{datainicial}/{datafinal}/{nome}")
-	public ResponseEntity<Optional<List<Contas>>>  findAllContasDataVencimentoPagas(@PathVariable("datainicial") Date datainicial, @PathVariable("datafinal") Date datafinal, @PathVariable("nome") String nome) {
+	@GetMapping("dvpagas/{datainicial}/{datafinal}/{nome}/{idempresa}")
+	public ResponseEntity<Optional<List<Contas>>>  findAllContasDataVencimentoPagas(@PathVariable("datainicial") Date datainicial, @PathVariable("datafinal") Date datafinal, @PathVariable("nome") String nome, @PathVariable int idempresa ) {
 		if (nome.equalsIgnoreCase("@")){
 			nome = "";
 		}
-		Optional<List<Contas>> lista = contasRepository.findAllContasDataVencimentoPagas(nome, datainicial, datafinal, "r");
+		Optional<List<Contas>> lista = contasRepository.findAllContasDataVencimentoPagas(nome, datainicial, datafinal, "r", idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(lista);
 	}
+	
 	
 	
 	@PostMapping("/salvar")
@@ -220,7 +222,7 @@ public class ContasReceberController {
 			fluxoContas.setFluxocaixa(fluxoCaixa);
 			fluxoContasRepository.save(fluxoContas);
 		}
-		Contasaldo contaSaldo = contaSaldoRepository.findByConta(conta.getConta().getIdconta(),"@");
+		Contasaldo contaSaldo = contaSaldoRepository.findByConta(conta.getConta().getIdconta(),"@", conta.getEmpresa().getIdempresa());
 		contaSaldo.setSaldoinicial(contaSaldo.getSaldoliquido() + conta.getValorpago());
 		contaSaldo.setEntradas(contaSaldo.getEntradas() + conta.getValorpago());
 		contaSaldo.setSaldo(contaSaldo.getSaldo() + conta.getValorpago());
@@ -235,26 +237,26 @@ public class ContasReceberController {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@GetMapping("/hoje")
-	public ResponseEntity<Float>  vencidasHoje() {
-		Float valor = contasRepository.valorContasVencimentoHoje(new Date(),"r");
+	@GetMapping("/hoje/{idempresa}")
+	public ResponseEntity<Float>  vencidasHoje(@PathVariable int idempresa) {
+		Float valor = contasRepository.valorContasVencimentoHoje(new Date(),"r", idempresa);
 		if (valor == null) {
 			valor = 0.0f;
 		}
 		return ResponseEntity.ok(valor);
 	}
 	
-	@GetMapping("/vencidas")
-	public ResponseEntity<Float>  vencidas() {
-		Float valor = contasRepository.valorContasVencidas(new Date(),"r");
+	@GetMapping("/vencidas/{idempresa}")
+	public ResponseEntity<Float>  vencidas(@PathVariable int idempresa) {
+		Float valor = contasRepository.valorContasVencidas(new Date(),"r", idempresa);
 		if (valor == null) {
 			valor = 0.0f;
 		}
 		return ResponseEntity.ok(valor);
 	}
 	
-	@GetMapping("/restomes")
-	public ResponseEntity<Float>  vencerRestoMes() {
+	@GetMapping("/restomes/{idempresa}")
+	public ResponseEntity<Float>  vencerRestoMes(@PathVariable int idempresa) {
 		Conversor c = new Conversor();
 		String data = c.ConvercaoDataPadrao(new Date());
 		String mesano = data.substring(6,10) + "-" + data.substring(3,5);
@@ -262,7 +264,7 @@ public class ContasReceberController {
 		
 		String cData =  mesano + "-" + String.valueOf(c.getRestoMes(Integer.parseInt(mes)));
 		Date dataFinal = c.ConvercaoStringData(cData);
-		Float valor = contasRepository.contasRestoMes(new Date(), dataFinal,"r");
+		Float valor = contasRepository.contasRestoMes(new Date(), dataFinal,"r", idempresa);
 		if (valor == null) {
 			valor = 0.0f;
 		}

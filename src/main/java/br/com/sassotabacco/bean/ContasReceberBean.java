@@ -6,18 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.sassotabacco.model.Contas;
 import br.com.sassotabacco.repository.ContasRepository;
-import br.com.sassotabacco.repository.FluxoCaixaRepository;
-import br.com.sassotabacco.repository.FluxoContasRepository;
 import br.com.sassotabacco.util.Conversor;
 
 public class ContasReceberBean {
 	
 	@Autowired
 	private ContasRepository contasRepository;
-	@Autowired
-	private FluxoCaixaRepository fluxoCaixaRepository;
-	@Autowired
-	private FluxoContasRepository fluxoContasRepository;
 	
 	
 	public void salvarReceber(Contas conta) {

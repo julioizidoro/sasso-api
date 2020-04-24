@@ -70,11 +70,11 @@ public class DevolucaoController {
 		return ResponseEntity.ok(devolucaoProduto.get());
 	}
 	
-	@GetMapping("listar/devolucao")
-	public ResponseEntity<List<Devolucao>> listarDevolucao() {
+	@GetMapping("listar/devolucao/{idempresa}")
+	public ResponseEntity<List<Devolucao>> listarDevolucao(@PathVariable int idempresa) {
 		Conversor c =new Conversor();
 		Date data = c.SomarDiasData(new Date(), -90);
-		List<Devolucao> lista = devolucaoRepository.findByData(data);
+		List<Devolucao> lista = devolucaoRepository.findByData(data, idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}

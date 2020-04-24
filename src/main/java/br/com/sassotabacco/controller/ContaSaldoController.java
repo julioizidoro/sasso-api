@@ -36,28 +36,28 @@ public class ContaSaldoController {
 		return contaSaldoRepository.save(contaSaldo);
 	}
 	
-	@GetMapping("/listar/{mesano}")
-	public ResponseEntity<List<Contasaldo>> listarMesAno(@PathVariable("mesano") String mesano) {
+	@GetMapping("/listar/{mesano}/{idempresa}")
+	public ResponseEntity<List<Contasaldo>> listarMesAno(@PathVariable("mesano") String mesano, @PathVariable("idempresa") int idempresa) {
 		if (mesano.equalsIgnoreCase("@")) {
 			Conversor c = new Conversor();
 			String data = c.ConvercaoDataPadrao(new Date());
 			mesano = data.substring(3,5) + "/" + data.substring(6,10);
 		}
-		List<Contasaldo> lista = contaSaldoRepository.findByMesAno(mesano);
+		List<Contasaldo> lista = contaSaldoRepository.findByMesAno(mesano, idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(lista);
 	}
 	
-	@GetMapping("/conta/{idconta}/{mesano}")
-	public ResponseEntity<Contasaldo> getMesAno(@PathVariable("idconta") int idconta, @PathVariable("mesano") String mesano) {
+	@GetMapping("/conta/{idconta}/{mesano}/{idempresa}")
+	public ResponseEntity<Contasaldo> getMesAno(@PathVariable("idconta") int idconta, @PathVariable("mesano") String mesano, @PathVariable("idempresa") int idempresa) {
 		if (mesano.equalsIgnoreCase("@")) {
 			Conversor c = new Conversor();
 			String data = c.ConvercaoData(new Date());
 			mesano = data.substring(0, 2) + "/" + data.substring(7,10);
 		}
-		Contasaldo contaSaldo = contaSaldoRepository.findByConta(idconta, mesano);
+		Contasaldo contaSaldo = contaSaldoRepository.findByConta(idconta, mesano, idempresa);
 		if (contaSaldo==null) {
 			return ResponseEntity.notFound().build();
 		}
@@ -73,19 +73,19 @@ public class ContaSaldoController {
 		return ResponseEntity.ok(contaSaldo);
 	}
 	
-	@GetMapping("/ativos")
-	public ResponseEntity<List<Contasaldo>> getAtivos() {
-		List<Contasaldo> listaContaSaldo = contaSaldoRepository.findByAtivos();
+	@GetMapping("/ativos/{idempresa}")
+	public ResponseEntity<List<Contasaldo>> getAtivos(@PathVariable("idempresa") int idempresa) {
+		List<Contasaldo> listaContaSaldo = contaSaldoRepository.findByAtivos(idempresa);
 		if (listaContaSaldo==null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(listaContaSaldo);
 	}
 	
-	@PostMapping("/gerarsaldo")
+	@PostMapping("/gerarsaldo/{idempresa}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public String iniciarMes(@Valid @RequestBody Contasaldo contaSaldo) {
-		List<Contasaldo> listaAbertos = contaSaldoRepository.findByAtivos();
+	public String iniciarMes(@Valid @RequestBody Contasaldo contaSaldo, @PathVariable("idempresa") int idempresa) {
+		List<Contasaldo> listaAbertos = contaSaldoRepository.findByAtivos(idempresa);
 		try {
 			if (listaAbertos != null) {
 				

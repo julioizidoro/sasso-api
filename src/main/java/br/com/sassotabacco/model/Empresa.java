@@ -45,13 +45,19 @@ public class Empresa {
 		
 	}
 
-	public Integer getIempresa() {
+	
+
+	public Integer getIdempresa() {
 		return idempresa;
 	}
 
-	public void setIempresa(Integer idempresa) {
+
+
+	public void setIdempresa(Integer idempresa) {
 		this.idempresa = idempresa;
 	}
+
+
 
 	public String getRazaosocial() {
 		return razaosocial;

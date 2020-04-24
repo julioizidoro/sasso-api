@@ -73,14 +73,14 @@ public class ProducaoController {
 		return ResponseEntity.ok(producao.get());
 	}
 	
-	@GetMapping("/producao/listar/{descricao}")
-	public ResponseEntity<List<Producao>> listarProducao(@PathVariable String descricao) {
+	@GetMapping("/producao/listar/{descricao}/{idempresa}")
+	public ResponseEntity<List<Producao>> listarProducao(@PathVariable String descricao, @PathVariable int idempresa) {
 		Conversor c = new Conversor();
 		Date data = c.SomarDiasData(new Date(), -90);
 		if (descricao.equalsIgnoreCase("@")) {
 			descricao = " ";
 		}
-		List<Producao> lista = producaoRepository.findByDescricao(descricao, data);
+		List<Producao> lista = producaoRepository.findByDescricao(descricao, data, idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}

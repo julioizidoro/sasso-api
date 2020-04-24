@@ -77,11 +77,11 @@ public class AcertoController {
 		return ResponseEntity.ok(acertoProduto.get());
 	}
 	
-	@GetMapping("listar/acerto")
-	public ResponseEntity<List<Acerto>> listarAcerto() {
+	@GetMapping("listar/acerto/{idempresa}")
+	public ResponseEntity<List<Acerto>> listarAcerto(@PathVariable Integer idempresa) {
 		Conversor c =new Conversor();
 		Date data = c.SomarDiasData(new Date(), -90);
-		List<Acerto> lista = acertoRepository.findByData(data);
+		List<Acerto> lista = acertoRepository.findByData(data, idempresa);
 		if (lista==null) {
 			return ResponseEntity.notFound().build();
 		}

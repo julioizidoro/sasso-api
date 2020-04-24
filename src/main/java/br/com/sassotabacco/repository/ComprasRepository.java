@@ -16,16 +16,16 @@ public interface ComprasRepository extends JpaRepository<Compras, Integer>{
 	
 	Optional<Compras> findById(int id);
 	@Query("Select c from Compras c where c.instituicao.nome like CONCAT('%', :nome, '%') and "
-			+ " c.datacompra>= :data90 order by c.datacompra ")
-	List<Compras> findAll(@Param("nome") String nome, @Param("data90") Date data90);
+			+ " c.datacompra>= :data90  and c.empresa.idempresa= :idempresa  order by c.datacompra ")
+	List<Compras> findAll(@Param("nome") String nome, @Param("data90") Date data90, @Param("idempresa") int idempresa);
 	
 	
 	//Listar documento
-	@Query("Select c from Compras c where c.documento= :documento order by c.datacompra ")
-	List<Compras> findDocumento(@Param("documento") String documento);
+	@Query("Select c from Compras c where c.documento= :documento and c.empresa.idempresa= :idempresa order by c.datacompra ")
+	List<Compras> findDocumento(@Param("documento") String documento, @Param("idempresa") int idempresa);
 	
 	//Listar nome
-	@Query("Select c from Compras c where c.instituicao.nome like CONCAT('%', :nome, '%') order by c.datacompra ")
-	List<Compras> findNome(@Param("nome") String nome);
+	@Query("Select c from Compras c where c.instituicao.nome like CONCAT('%', :nome, '%') and c.empresa.idempresa= :idempresa order by c.datacompra ")
+	List<Compras> findNome(@Param("nome") String nome, @Param("idempresa") int idempresa);
 	
 }
