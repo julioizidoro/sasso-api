@@ -48,17 +48,17 @@ public interface ContasRepository extends JpaRepository<Contas, Integer>{
 	
 	//Consulta vencendo hoje
 	@Query(
-	value = "select distinct sum(valorparcela) as valorcontas From contas where datavencimento= :data and tipo= :tipo and valorpago=0 and empresa.idempresa= :idempresa  ",
+	value = "select distinct sum(valorparcela) as valorcontas From contas where datavencimento= :data and tipo= :tipo and valorpago=0 and empresa_idempresa= :idempresa  ",
 	nativeQuery = true)
 		Float valorContasVencimentoHoje(@Param("data") Date data, @Param("tipo") String tipo, @Param("idempresa") int idempresa);
 	
 	@Query(
-	value = "select distinct sum(valorparcela) as valorcontas From contas where datavencimento> :datainicial and datavencimento<= :datafinal  and tipo= :tipo and valorpago=0 and empresa.idempresa= :idempresa ",
+	value = "select distinct sum(valorparcela) as valorcontas From contas where datavencimento> :datainicial and datavencimento<= :datafinal  and tipo= :tipo and valorpago=0 and empresa_idempresa= :idempresa ",
 	nativeQuery = true)
 		Float contasRestoMes(@Param("datainicial") Date datainicial,  @Param("datafinal") Date datafinal, @Param("tipo") String tipo, @Param("idempresa") int idempresa);
 	
 	@Query(
-	value = "select distinct sum(valorparcela) as valorcontas From contas where datavencimento< :data  and tipo= :tipo and valorpago=0 and empresa.idempresa= :idempresa ",
+	value = "select distinct sum(valorparcela) as valorcontas From contas where datavencimento< :data  and tipo= :tipo and valorpago=0 and empresa_idempresa= :idempresa ",
 	nativeQuery = true)
 		Float valorContasVencidas(@Param("data") Date data, @Param("tipo") String tipo, @Param("idempresa") int idempresa);
 	
