@@ -24,6 +24,7 @@ import br.com.sassotabacco.model.Comprasconta;
 import br.com.sassotabacco.model.Comprasproduto;
 import br.com.sassotabacco.model.Conta;
 import br.com.sassotabacco.model.Contas;
+import br.com.sassotabacco.model.Estoque;
 import br.com.sassotabacco.model.Fluxocaixa;
 import br.com.sassotabacco.model.Fluxocontas;
 import br.com.sassotabacco.repository.ComprasContaRepository;
@@ -32,6 +33,7 @@ import br.com.sassotabacco.repository.ComprasRepository;
 import br.com.sassotabacco.repository.ContaRepository;
 import br.com.sassotabacco.repository.ContaSaldoRepository;
 import br.com.sassotabacco.repository.ContasRepository;
+import br.com.sassotabacco.repository.EstoqueRepository;
 import br.com.sassotabacco.repository.FluxoCaixaRepository;
 import br.com.sassotabacco.repository.FluxoContasRepository;
 import br.com.sassotabacco.service.S3Service;
@@ -50,6 +52,8 @@ public class ComprasController {
 	private FluxoContasRepository fluxoContasRepository;
 	@Autowired
 	private ContaRepository contaRepository;
+	@Autowired
+	private EstoqueRepository estoqueRepository;
 	
 	@Autowired
 	private ComprasRepository comprasRepository;
@@ -71,8 +75,7 @@ public class ComprasController {
 	public void salvarConta(@Valid @RequestBody List<Comprasconta> lista) {
 		for(int i=0;i<lista.size();i++) {
 			salvarParcelaConta(lista.get(i).getContas());
-			comprasContaRepository.save(lista.get(i));
-		}
+			comprasContaRepository.save(lista.get(i));		}
 	}
 	
 	@PostMapping("/salvar/produto")
@@ -80,6 +83,11 @@ public class ComprasController {
 	public void salvarProduto(@Valid @RequestBody List<Comprasproduto> lista) {
 		for(int i=0;i<lista.size();i++) {
 			comprasProdutoRepository.save(lista.get(i));
+			Optional<Estoque> e = estoqueRepository.findById(lista.get(i).getEstoque().getIdestoque());
+			Estoque estoque = e.get();
+			estoque.setQuantidadeestoque(estoque.getQuantidadeestoque() + lista.get(i).getQuantidade());
+			estoque.setCustomedio(lista.get(i).getCusto());
+			estoqueRepository.save(estoque);
 		}
 	}
 	

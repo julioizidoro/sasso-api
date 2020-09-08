@@ -51,5 +51,11 @@ public class Conversor {
 			return 30;
 		} else return 28;
 	}
+	
+	public static String foramtarHoraString() {
+		DateFormat formato = new SimpleDateFormat("HH:mm:ss");
+		String formattedDate = formato.format(new Date());
+		return formattedDate;
+	}
 
 }

@@ -28,6 +28,8 @@ public class Formapagamento implements Serializable {
 	@Size(max = 45)
     @Column(name = "descricao")
     private String descricao;
+	@Column(name = "taxa")
+    private Float taxa;
 	
 	public Formapagamento() {
 	
@@ -47,6 +49,14 @@ public class Formapagamento implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public Float getTaxa() {
+		return taxa;
+	}
+
+	public void setTaxa(Float taxa) {
+		this.taxa = taxa;
 	}
 
 	@Override
